@@ -1,0 +1,32 @@
+set colorcolumn=72
+
+set tabstop=2
+set shiftwidth=2
+
+let _curfile = expand("%:t")
+if _curfile =~ "Makefile"
+  set noexpandtab
+else
+  set expandtab
+endif
+
+function! PFWordWrap()
+  set formatoptions+=w
+  set tw=71
+  normal gggqG
+endfunction
+
+function! PFPreWrite()
+  execute 'set nopaste '
+  execute 'retab '
+  let _curw = winsaveview()
+  execute 'FixWhitespace '
+  call PFWordWrap()
+  execute 'FixWhitespace '
+  call winrestview(_curw)
+  "let _cursor_pos = getpos(".")
+  "call setpos('.', _cursor_pos)
+endfunction
+
+autocmd BufWritePre * :call PFPreWrite()
+let g:localvimrc_sourced_once_for_file = 1
