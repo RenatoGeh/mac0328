@@ -98,13 +98,13 @@ int test_graph(Digraph G, double d, pair *pts) {
 
 #define IMG_SIZE_X 200
 #define IMG_SIZE_Y 200
-void draw_graph(Digraph G, pair *pts) {
+void draw_graph(Digraph G, pair *pts, char *filename) {
   int i;
   FILE *out;
 
-  out = fopen("graph.dot", "w");
+  out = fopen(filename, "w");
   if (out == NULL) {
-    puts("Erro ao criar arquivo graph.dot.");
+    printf("Erro ao criar arquivo %s.\n", filename);
     return;
   }
 
@@ -121,6 +121,7 @@ void draw_graph(Digraph G, pair *pts) {
       it = it->next;
     }
 #else
+    int j;
     for (j = 0; j < G->V; j++)
       if (G->adj[i][j])
         fprintf(out, "v_%d -> v_%d;\n", i, j);
@@ -134,19 +135,26 @@ void draw_graph(Digraph G, pair *pts) {
 
 int main(int argc, char *args[]) {
   int v;
+  char *filename;
   double d;
   pair *pts;
   Digraph G;
 
   if (argc < 3) {
-    puts("Uso: ./ep v d\n"
+    puts("Uso: ./ep v d [filename]\n"
         "  v: numero maximo de pontos/vertices.\n"
-        "  d: distancia para se criar uma aresta no grafo.");
+        "  d: distancia para se criar uma aresta no grafo.\n"
+        "  filename: cria um arquivo filename com a representacao do "
+        "grafo em Graphviz Dot (argumento opcional).");
     return 1;
   }
 
   v = atoi(args[1]);
   d = atof(args[2]);
+  filename = NULL;
+
+  if (argc > 2)
+    filename = args[3];
 
   pts = generate_points(v, SEED);
   G = compile_graph(v, d, pts);
@@ -160,8 +168,10 @@ int main(int argc, char *args[]) {
     puts("Passou no teste.");
   }
 
-  puts("Desenhando grafo no arquivo graph.dot.");
-  draw_graph(G, pts);
+  if (filename != NULL) {
+    printf("Desenhando grafo no arquivo %s.\n", filename);
+    draw_graph(G, pts, filename);
+  }
 
   DIGRAPHdestroy(G);
   free(pts);

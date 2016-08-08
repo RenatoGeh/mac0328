@@ -248,12 +248,12 @@ setlocal fml=1
 setlocal fdn=20
 setlocal fen
 silent! normal! zE
-let s:l = 58 - ((57 * winheight(0) + 29) / 58)
+let s:l = 125 - ((57 * winheight(0) + 29) / 58)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-58
-normal! 03|
+125
+normal! 010|
 wincmd w
 argglobal
 edit Makefile
@@ -266,14 +266,13 @@ setlocal fml=1
 setlocal fdn=20
 setlocal fen
 silent! normal! zE
-let s:l = 41 - ((40 * winheight(0) + 29) / 58)
+let s:l = 8 - ((7 * winheight(0) + 29) / 58)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-41
-normal! 0
+8
+normal! 04|
 wincmd w
-2wincmd w
 exe 'vert 1resize ' . ((&columns * 104 + 106) / 212)
 exe 'vert 2resize ' . ((&columns * 107 + 106) / 212)
 tabnext 5
