@@ -3,6 +3,12 @@ LIBS = -lm
 
 GRAPH = lists
 
+ifeq ($(GRAPH), lists)
+	CFLAGS += -DGRAPH=0
+else
+	CFLAGS += -DGRAPH=1
+endif
+
 DEPS = DIGRAPH$(GRAPH).o DIGRAPHrand.o GRAPHrand.o
 
 all: ep
@@ -31,5 +37,5 @@ GRAPHrand.o: GRAPHrand.c GRAPHrand.h DIGRAPHlists.h DIGRAPHmatrix.h
 
 .PHONY: clean
 clean:
-	rm *.out *.gch *.o run
+	rm *.out *.gch *.o ep
 

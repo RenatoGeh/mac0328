@@ -18,8 +18,8 @@ badd +1 DIGRAPHproto.c
 badd +1 DIGRAPHproto.h
 badd +1 GRAPHrand.c
 badd +37 GRAPHrand.h
-badd +1 Makefile
-badd +2 main.c
+badd +7 Makefile
+badd +73 main.c
 argglobal
 silent! argdel *
 argadd DIGRAPHmatrix.h
@@ -47,11 +47,11 @@ setlocal fml=1
 setlocal fdn=20
 setlocal fen
 silent! normal! zE
-let s:l = 17 - ((16 * winheight(0) + 29) / 58)
+let s:l = 58 - ((57 * winheight(0) + 29) / 58)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-17
+58
 normal! 0
 wincmd w
 argglobal
@@ -65,13 +65,14 @@ setlocal fml=1
 setlocal fdn=20
 setlocal fen
 silent! normal! zE
-let s:l = 22 - ((21 * winheight(0) + 29) / 58)
+let s:l = 62 - ((57 * winheight(0) + 29) / 58)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-22
+62
 normal! 0
 wincmd w
+2wincmd w
 exe 'vert 1resize ' . ((&columns * 106 + 106) / 212)
 exe 'vert 2resize ' . ((&columns * 105 + 106) / 212)
 tabedit DIGRAPHmatrix.h
@@ -97,11 +98,11 @@ setlocal fml=1
 setlocal fdn=20
 setlocal fen
 silent! normal! zE
-let s:l = 75 - ((57 * winheight(0) + 29) / 58)
+let s:l = 59 - ((57 * winheight(0) + 29) / 58)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-75
+59
 normal! 02|
 wincmd w
 argglobal
@@ -147,11 +148,11 @@ setlocal fml=1
 setlocal fdn=20
 setlocal fen
 silent! normal! zE
-let s:l = 34 - ((33 * winheight(0) + 29) / 58)
+let s:l = 23 - ((22 * winheight(0) + 29) / 58)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-34
+23
 normal! 0
 wincmd w
 argglobal
@@ -165,11 +166,11 @@ setlocal fml=1
 setlocal fdn=20
 setlocal fen
 silent! normal! zE
-let s:l = 24 - ((23 * winheight(0) + 29) / 58)
+let s:l = 32 - ((31 * winheight(0) + 29) / 58)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-24
+32
 normal! 0
 wincmd w
 exe 'vert 1resize ' . ((&columns * 106 + 106) / 212)
@@ -197,11 +198,11 @@ setlocal fml=1
 setlocal fdn=20
 setlocal fen
 silent! normal! zE
-let s:l = 37 - ((36 * winheight(0) + 29) / 58)
+let s:l = 23 - ((22 * winheight(0) + 29) / 58)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-37
+23
 normal! 0
 wincmd w
 argglobal
@@ -234,8 +235,7 @@ set nosplitbelow
 set nosplitright
 wincmd t
 set winheight=1 winwidth=1
-exe 'vert 1resize ' . ((&columns * 106 + 106) / 212)
-exe 'vert 2resize ' . ((&columns * 105 + 106) / 212)
+wincmd =
 argglobal
 edit main.c
 setlocal fdm=manual
@@ -247,11 +247,11 @@ setlocal fml=1
 setlocal fdn=20
 setlocal fen
 silent! normal! zE
-let s:l = 2 - ((1 * winheight(0) + 29) / 58)
+let s:l = 73 - ((0 * winheight(0) + 29) / 58)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-2
+73
 normal! 0
 wincmd w
 argglobal
@@ -265,16 +265,15 @@ setlocal fml=1
 setlocal fdn=20
 setlocal fen
 silent! normal! zE
-let s:l = 25 - ((24 * winheight(0) + 29) / 58)
+let s:l = 41 - ((40 * winheight(0) + 29) / 58)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-25
-normal! 059|
+41
+normal! 0
 wincmd w
-exe 'vert 1resize ' . ((&columns * 106 + 106) / 212)
-exe 'vert 2resize ' . ((&columns * 105 + 106) / 212)
-tabnext 4
+wincmd =
+tabnext 1
 if exists('s:wipebuf') && getbufvar(s:wipebuf, '&buftype') isnot# 'terminal'
   silent exe 'bwipe ' . s:wipebuf
 endif

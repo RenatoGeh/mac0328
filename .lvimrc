@@ -24,8 +24,6 @@ function! PFPreWrite()
   call PFWordWrap()
   execute 'FixWhitespace '
   call winrestview(_curw)
-  "let _cursor_pos = getpos(".")
-  "call setpos('.', _cursor_pos)
 endfunction
 
 autocmd BufWritePre * :call PFPreWrite()

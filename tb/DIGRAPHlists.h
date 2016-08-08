@@ -30,6 +30,10 @@
  * vizinho w de v e o endereço do nó seguinte da lista. Um link é um
  * ponteiro para um node. */
 typedef struct node *link;
+struct node {
+  Vertex w;
+  link next;
+};
 
 /* REPRESENTAÇÃO POR LISTAS DE ADJACÊNCIA: A estrutura digraph
  * representa um digrafo. O campo adj é um ponteiro para o vetor de

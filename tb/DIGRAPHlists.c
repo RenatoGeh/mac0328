@@ -23,11 +23,6 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-struct node {
-  Vertex w;
-  link next;
-};
-
 static link NEWnode(Vertex w, link next) {
   link a = malloc(sizeof(struct node));
   a->w = w;

@@ -20,10 +20,14 @@
 #ifndef GRAPH_RAND_H_
 #define GRAPH_RAND_H_
 
-#ifdef DIGRAPH_MATRIX_H_
-#include "DIGRAPHmatrix.h"
-#else
+#ifndef GRAPH
+#define GRAPH 0
+#endif
+
+#if GRAPH == 0
 #include "DIGRAPHlists.h"
+#else
+#include "DIGRAPHmatrix.h"
 #endif
 
 /* Constrói um grafo aleatório com vértices 0..V-1 e exatamente E
