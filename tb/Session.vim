@@ -9,7 +9,7 @@ endif
 set shortmess=aoO
 badd +75 DIGRAPHmatrix.h
 badd +58 DIGRAPHmatrix.c
-badd +84 DIGRAPHlists.h
+badd +1 DIGRAPHlists.h
 badd +1 DIGRAPHlists.c
 badd +1 ~/Documents/EPs/mac0328/guidelines
 badd +1 DIGRAPHrand.c
@@ -19,8 +19,10 @@ badd +1 DIGRAPHproto.h
 badd +1 GRAPHrand.c
 badd +23 GRAPHrand.h
 badd +41 Makefile
-badd +9 main.c
-badd +0 ~/gospn/src/io/output.go
+badd +27 main.c
+badd +1 ~/gospn/src/io/output.go
+badd +46 README.txt
+badd +0 term://.//6289:/bin/zsh
 argglobal
 silent! argdel *
 argadd DIGRAPHmatrix.h
@@ -48,11 +50,11 @@ setlocal fml=1
 setlocal fdn=20
 setlocal fen
 silent! normal! zE
-let s:l = 84 - ((27 * winheight(0) + 29) / 58)
+let s:l = 1 - ((0 * winheight(0) + 29) / 58)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-84
+1
 normal! 0
 wincmd w
 argglobal
@@ -66,12 +68,12 @@ setlocal fml=1
 setlocal fdn=20
 setlocal fen
 silent! normal! zE
-let s:l = 132 - ((47 * winheight(0) + 29) / 58)
+let s:l = 1 - ((0 * winheight(0) + 29) / 58)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-132
-normal! 061|
+1
+normal! 0
 wincmd w
 exe 'vert 1resize ' . ((&columns * 106 + 106) / 212)
 exe 'vert 2resize ' . ((&columns * 105 + 106) / 212)
@@ -116,12 +118,12 @@ setlocal fml=1
 setlocal fdn=20
 setlocal fen
 silent! normal! zE
-let s:l = 115 - ((57 * winheight(0) + 29) / 58)
+let s:l = 75 - ((17 * winheight(0) + 29) / 58)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-115
-normal! 0
+75
+normal! 03|
 wincmd w
 exe 'vert 1resize ' . ((&columns * 106 + 106) / 212)
 exe 'vert 2resize ' . ((&columns * 105 + 106) / 212)
@@ -148,11 +150,11 @@ setlocal fml=1
 setlocal fdn=20
 setlocal fen
 silent! normal! zE
-let s:l = 23 - ((22 * winheight(0) + 29) / 58)
+let s:l = 26 - ((25 * winheight(0) + 29) / 58)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-23
+26
 normal! 0
 wincmd w
 argglobal
@@ -166,11 +168,11 @@ setlocal fml=1
 setlocal fdn=20
 setlocal fen
 silent! normal! zE
-let s:l = 1 - ((0 * winheight(0) + 29) / 58)
+let s:l = 10 - ((9 * winheight(0) + 29) / 58)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-1
+10
 normal! 0
 wincmd w
 exe 'vert 1resize ' . ((&columns * 106 + 106) / 212)
@@ -198,11 +200,11 @@ setlocal fml=1
 setlocal fdn=20
 setlocal fen
 silent! normal! zE
-let s:l = 23 - ((22 * winheight(0) + 29) / 58)
+let s:l = 25 - ((24 * winheight(0) + 29) / 58)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-23
+25
 normal! 0
 wincmd w
 argglobal
@@ -248,12 +250,12 @@ setlocal fml=1
 setlocal fdn=20
 setlocal fen
 silent! normal! zE
-let s:l = 125 - ((57 * winheight(0) + 29) / 58)
+let s:l = 35 - ((0 * winheight(0) + 29) / 58)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-125
-normal! 010|
+35
+normal! 06|
 wincmd w
 argglobal
 edit Makefile
@@ -266,15 +268,64 @@ setlocal fml=1
 setlocal fdn=20
 setlocal fen
 silent! normal! zE
-let s:l = 8 - ((7 * winheight(0) + 29) / 58)
+let s:l = 20 - ((19 * winheight(0) + 29) / 58)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-8
-normal! 04|
+20
+normal! 0
 wincmd w
 exe 'vert 1resize ' . ((&columns * 104 + 106) / 212)
 exe 'vert 2resize ' . ((&columns * 107 + 106) / 212)
+tabedit README.txt
+set splitbelow splitright
+wincmd _ | wincmd |
+vsplit
+1wincmd h
+wincmd w
+set nosplitbelow
+set nosplitright
+wincmd t
+set winheight=1 winwidth=1
+exe 'vert 1resize ' . ((&columns * 106 + 106) / 212)
+exe 'vert 2resize ' . ((&columns * 105 + 106) / 212)
+argglobal
+edit README.txt
+setlocal fdm=manual
+setlocal fde=0
+setlocal fmr={{{,}}}
+setlocal fdi=#
+setlocal fdl=0
+setlocal fml=1
+setlocal fdn=20
+setlocal fen
+silent! normal! zE
+let s:l = 46 - ((28 * winheight(0) + 29) / 58)
+if s:l < 1 | let s:l = 1 | endif
+exe s:l
+normal! zt
+46
+normal! 0
+wincmd w
+argglobal
+edit term://.//6289:/bin/zsh
+setlocal fdm=manual
+setlocal fde=0
+setlocal fmr={{{,}}}
+setlocal fdi=#
+setlocal fdl=0
+setlocal fml=1
+setlocal fdn=20
+setlocal fen
+let s:l = 58 - ((57 * winheight(0) + 29) / 58)
+if s:l < 1 | let s:l = 1 | endif
+exe s:l
+normal! zt
+58
+normal! 0
+wincmd w
+exe 'vert 1resize ' . ((&columns * 106 + 106) / 212)
+exe 'vert 2resize ' . ((&columns * 105 + 106) / 212)
 tabnext 5
 if exists('s:wipebuf') && getbufvar(s:wipebuf, '&buftype') isnot# 'terminal'
   silent exe 'bwipe ' . s:wipebuf

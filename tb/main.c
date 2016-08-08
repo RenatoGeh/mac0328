@@ -1,3 +1,31 @@
+/* DECLARO QUE SOU O UNICO AUTOR E RESPONSAVEL POR ESTE PROGRAMA.
+// TODAS AS PARTES DO PROGRAMA, EXCETO AS QUE FORAM FORNECIDAS
+// PELO PROFESSOR OU COPIADAS DO LIVRO OU DAS BIBLIOTECAS DE
+// SEDGEWICK OU ROBERTS, FORAM DESENVOLVIDAS POR MIM.  DECLARO
+// TAMBEM QUE SOU RESPONSAVEL POR TODAS AS COPIAS DESTE PROGRAMA
+// E QUE NAO DISTRIBUI NEM FACILITEI A DISTRIBUICAO DE COPIAS.
+//
+// Autor:      Renato Lui Geh
+// Numero USP: 8536030
+// Sigla:      RENATOLU
+// Data:       2016-08-07
+//
+// Este arquivo faz parte da tarefa B
+// da disciplina MAC0328.
+//
+////////////////////////////////////////////////////////////// */
+
+/* Este programa escolhe v pontos aleatórios em um quadrado [0,1)x[0,1)
+ * e constrói um grafo em que existe uma aresta se e somente se a
+ * distância entre dois vértices p e q é menor ou igual a d.
+ * Opcionalmente, se dado um nome de arquivo como terceiro argumento
+ * na linha de comando, o programa imprime um arquivo com representação
+ * Graphviz Dot. É então possível desenhar o grafo com o seguintes
+ * comando:
+ *   $ neato -Tpng graph.dot > graph.png
+ * Onde graph.dot é o nome dado como terceiro argumento na linha de
+ * comando. Para mais informações, leia o README.txt. */
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
@@ -40,6 +68,10 @@ pair* generate_points(int v, unsigned int seed) {
   return pts;
 }
 
+/* Retorna a distância euclideana entre dois ponteiros para pares de
+ * coordenadas p = &(p->x, p->y) e q = &(q->x, q->y). A distância é
+ * a raíz quadrada da soma dos quadrados das diferenças entre cada
+ * coordenada. */
 double distance(pair *p, pair *q) {
   double sqx, sqy;
   sqx = p->x-q->x;
@@ -72,6 +104,10 @@ Digraph compile_graph(int v, double d, pair *pts) {
   return G;
 }
 
+/* Testa se o digrafo G, dada uma distância d, tem uma aresta se e
+ * somente se a distância entre os pontos de cada par de vértices
+ * p e q são menores ou igual a d. Se existe algum par de pontos que
+ * tenha distância maior que d, retorna 1. Senão retorna 0. */
 int test_graph(Digraph G, double d, pair *pts) {
   int i;
 
@@ -98,6 +134,12 @@ int test_graph(Digraph G, double d, pair *pts) {
 
 #define IMG_SIZE_X 200
 #define IMG_SIZE_Y 200
+/* Desenha um digrafo G em um arquivo .dot com nome filename. Os
+ * vértices são desenhados nas posições escaladas dos pontos pts. Ou
+ * seja, multiplicam-se of pontos (que estão no intervalo [0,1)x[0,1))
+ * por uma constante inteira (e.g. 200) que significa a posição na
+ * imagem resultante. Não se guarante que a imagem terá a dimensão da
+ * constante. */
 void draw_graph(Digraph G, pair *pts, char *filename) {
   int i;
   FILE *out;
@@ -130,6 +172,8 @@ void draw_graph(Digraph G, pair *pts, char *filename) {
   fprintf(out, "}\n");
   fclose(out);
 }
+#undef IMG_SIZE_X
+#undef IMG_SIZE_Y
 
 #define SEED 123456
 
@@ -166,6 +210,11 @@ int main(int argc, char *args[]) {
     puts("Nao passou no teste.");
   } else {
     puts("Passou no teste.");
+  }
+
+  if (v < 100 && G->A < 1000) {
+    puts("Desenhando grafo na saida padrao.");
+    DIGRAPHshow(G);
   }
 
   if (filename != NULL) {
