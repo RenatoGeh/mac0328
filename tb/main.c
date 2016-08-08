@@ -96,6 +96,40 @@ int test_graph(Digraph G, double d, pair *pts) {
   return 0;
 }
 
+#define IMG_SIZE_X 200
+#define IMG_SIZE_Y 200
+void draw_graph(Digraph G, pair *pts) {
+  int i;
+  FILE *out;
+
+  out = fopen("graph.dot", "w");
+  if (out == NULL) {
+    puts("Erro ao criar arquivo graph.dot.");
+    return;
+  }
+
+  fprintf(out, "digraph {\n");
+  for (i = 0; i < G->V; i++)
+    fprintf(out, "v_%d [label=\"%d\", pos=\"%d, %d!\", shape=circle];"
+        "\n", i, i, (int)(IMG_SIZE_X * pts[i].x),
+        (int)(IMG_SIZE_Y * pts[i].y));
+  for (i = 0; i < G->V; i++) {
+#if GRAPH == 0
+    link it = G->adj[i];
+    while (it != NULL) {
+      fprintf(out, "v_%d -> v_%d;\n", i, it->w);
+      it = it->next;
+    }
+#else
+    for (j = 0; j < G->V; j++)
+      if (G->adj[i][j])
+        fprintf(out, "v_%d -> v_%d;\n", i, j);
+#endif
+  }
+  fprintf(out, "}\n");
+  fclose(out);
+}
+
 #define SEED 123456
 
 int main(int argc, char *args[]) {
@@ -125,6 +159,12 @@ int main(int argc, char *args[]) {
   } else {
     puts("Passou no teste.");
   }
+
+  puts("Desenhando grafo no arquivo graph.dot.");
+  draw_graph(G, pts);
+
+  DIGRAPHdestroy(G);
+  free(pts);
 
   return 0;
 }

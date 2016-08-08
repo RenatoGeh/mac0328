@@ -115,3 +115,28 @@ int DIGRAPHoutdeg(Digraph G, Vertex v) {
   }
   return od;
 }
+
+void DIGRAPHdraw(Digraph G, const char *filename) {
+  int i;
+  FILE *out;
+
+  out = fopen(filename, "w");
+
+  if (out == NULL) {
+    printf("Erro ao criar arquivo %s.\n", filename);
+    return;
+  }
+
+  fprintf(out, "digraph {\n");
+  for (i = 0; i < G->V; i++)
+    fprintf(out, "v_%d [label=\"%d\", shape=circle];\n", i, i);
+  for (i = 0; i < G->V; i++) {
+    link it = G->adj[i];
+    while (it != NULL) {
+      fprintf(out, "v_%d -> v_%d;\n", i, it->w);
+      it = it->next;
+    }
+  }
+  fprintf(out, "}\n");
+  fclose(out);
+}

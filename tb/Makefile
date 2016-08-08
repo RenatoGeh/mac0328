@@ -37,5 +37,5 @@ GRAPHrand.o: GRAPHrand.c GRAPHrand.h DIGRAPHlists.h DIGRAPHmatrix.h
 
 .PHONY: clean
 clean:
-	rm *.out *.gch *.o ep
+	rm *.out *.gch *.o *.png *.dot ep
 

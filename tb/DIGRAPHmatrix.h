@@ -72,4 +72,10 @@ int DIGRAPHindeg(Digraph G, Vertex v);
  * retorna o grau de saída de um vértice v do digrafo G. */
 int DIGRAPHoutdeg(Digraph G, Vertex v);
 
+/* REPRESENTAÇÃO POR MATRIZ DE ADJACÊNCIAS: A função DIGRAPHdraw()
+ * cria um arquivo .dot que representa um digrafo em Graphviz Dot.
+ * Para mais informações sobre como desenhar grafos, veja
+ * http://www.graphviz.org/. */
+void DIGRAPHdraw(Digraph G, const char *filename);
+
 #endif
