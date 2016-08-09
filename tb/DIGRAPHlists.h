@@ -31,8 +31,8 @@
  * ponteiro para um node. */
 typedef struct node *link;
 struct node {
-  Vertex w;
-  link next;
+   Vertex w;
+   link next;
 };
 
 /* REPRESENTAÇÃO POR LISTAS DE ADJACÊNCIA: A estrutura digraph
@@ -40,9 +40,9 @@ struct node {
  * listas de adjacência, o campo V contém o número de vértices e o
  * campo A contém o número de arcos do digrafo. */
 struct digraph {
-  int V;
-  int A;
-  link *adj;
+   int V;
+   int A;
+   link *adj;
 };
 
 /* Um Digraph é um ponteiro para um digraph. */

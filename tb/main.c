@@ -43,29 +43,29 @@
 #include GRAPH_HEADER
 
 typedef struct {
-  double x;
-  double y;
+   double x;
+   double y;
 } pair;
 
 /* Gera um número pseudo-aleatório no intervalo [0, 1). */
 double randd() {
-  return (double) rand() / (RAND_MAX + 1.0);
+   return (double) rand() / (RAND_MAX + 1.0);
 }
 
 /* Gera v pontos pseudo-aleatórios dada uma semente seed para o gerador
  * de números pseudo-aleatórios. */
 pair* generate_points(int v, unsigned int seed) {
-  int i;
-  pair *pts;
+   int i;
+   pair *pts;
 
-  srand(seed);
-  pts = (pair*) malloc(v * sizeof(pair));
-  for (i = 0; i < v; i++) {
-    pts[i].x = randd();
-    pts[i].y = randd();
-  }
+   srand(seed);
+   pts = (pair*) malloc(v * sizeof(pair));
+   for (i = 0; i < v; i++) {
+      pts[i].x = randd();
+      pts[i].y = randd();
+   }
 
-  return pts;
+   return pts;
 }
 
 /* Retorna a distância euclideana entre dois ponteiros para pares de
@@ -73,12 +73,12 @@ pair* generate_points(int v, unsigned int seed) {
  * a raíz quadrada da soma dos quadrados das diferenças entre cada
  * coordenada. */
 double distance(pair *p, pair *q) {
-  double sqx, sqy;
-  sqx = p->x-q->x;
-  sqy = p->y-q->y;
-  sqx *= sqx;
-  sqy *= sqy;
-  return sqrt(sqx + sqy);
+   double sqx, sqy;
+   sqx = p->x-q->x;
+   sqy = p->y-q->y;
+   sqx *= sqx;
+   sqy *= sqy;
+   return sqrt(sqx + sqy);
 }
 
 /* Cria um digrafo em que existe um arco entre dois vértices quaisquer
@@ -87,21 +87,21 @@ double distance(pair *p, pair *q) {
  * grafo). Os v vértices são gerados a partir de um gerador de números
  * pseudo-aleatórios de acordo com uma semente seed. */
 Digraph compile_graph(int v, double d, pair *pts) {
-  int i, j;
-  Digraph G;
+   int i, j;
+   Digraph G;
 
-  G = DIGRAPHinit(v);
+   G = DIGRAPHinit(v);
 
-  for (i = 0; i < v; i++) {
-    for (j = i + 1; j < v; j++) {
-      if (distance(&pts[i], &pts[j]) <= d) {
-        DIGRAPHinsertA(G, i, j);
-        DIGRAPHinsertA(G, j, i);
+   for (i = 0; i < v; i++) {
+      for (j = i + 1; j < v; j++) {
+         if (distance(&pts[i], &pts[j]) <= d) {
+            DIGRAPHinsertA(G, i, j);
+            DIGRAPHinsertA(G, j, i);
+         }
       }
-    }
-  }
+   }
 
-  return G;
+   return G;
 }
 
 /* Testa se o digrafo G, dada uma distância d, tem uma aresta se e
@@ -109,27 +109,27 @@ Digraph compile_graph(int v, double d, pair *pts) {
  * p e q são menores ou igual a d. Se existe algum par de pontos que
  * tenha distância maior que d, retorna 1. Senão retorna 0. */
 int test_graph(Digraph G, double d, pair *pts) {
-  int i;
+   int i;
 
-  for (i = 0; i < G->V; i++) {
+   for (i = 0; i < G->V; i++) {
 #if GRAPH == 0
-    link it = G->adj[i];
-    while (it != NULL) {
-      if (distance(&pts[i], &pts[it->w]) > d)
-        return 1;
-      it = it->next;
-    }
+      link it = G->adj[i];
+      while (it != NULL) {
+         if (distance(&pts[i], &pts[it->w]) > d)
+         return 1;
+         it = it->next;
+      }
 #else
-    int j;
-    for (j = 0; j < G->V; j++) {
-      if (i == j || !(G->adj[i][j])) continue;
-      if (distance(&pts[i], &pts[j]) > d)
-        return 1;
-    }
+      int j;
+      for (j = 0; j < G->V; j++) {
+         if (i == j || !(G->adj[i][j])) continue;
+         if (distance(&pts[i], &pts[j]) > d)
+            return 1;
+      }
 #endif
-  }
+   }
 
-  return 0;
+   return 0;
 }
 
 #define IMG_SIZE_X 200
@@ -141,36 +141,36 @@ int test_graph(Digraph G, double d, pair *pts) {
  * imagem resultante. Não se guarante que a imagem terá a dimensão da
  * constante. */
 void draw_graph(Digraph G, pair *pts, char *filename) {
-  int i;
-  FILE *out;
+   int i;
+   FILE *out;
 
-  out = fopen(filename, "w");
-  if (out == NULL) {
-    printf("Erro ao criar arquivo %s.\n", filename);
-    return;
-  }
+   out = fopen(filename, "w");
+   if (out == NULL) {
+      printf("Erro ao criar arquivo %s.\n", filename);
+      return;
+   }
 
-  fprintf(out, "digraph {\n");
-  for (i = 0; i < G->V; i++)
-    fprintf(out, "v_%d [label=\"%d\", pos=\"%d, %d!\", shape=circle];"
-        "\n", i, i, (int)(IMG_SIZE_X * pts[i].x),
-        (int)(IMG_SIZE_Y * pts[i].y));
-  for (i = 0; i < G->V; i++) {
+   fprintf(out, "digraph {\n");
+   for (i = 0; i < G->V; i++)
+      fprintf(out, "v_%d [label=\"%d\", pos=\"%d, %d!\", shape=circle]"
+         ";\n", i, i, (int)(IMG_SIZE_X * pts[i].x),
+         (int)(IMG_SIZE_Y * pts[i].y));
+   for (i = 0; i < G->V; i++) {
 #if GRAPH == 0
-    link it = G->adj[i];
-    while (it != NULL) {
-      fprintf(out, "v_%d -> v_%d;\n", i, it->w);
-      it = it->next;
-    }
+      link it = G->adj[i];
+      while (it != NULL) {
+         fprintf(out, "v_%d -> v_%d;\n", i, it->w);
+         it = it->next;
+      }
 #else
-    int j;
-    for (j = 0; j < G->V; j++)
-      if (G->adj[i][j])
-        fprintf(out, "v_%d -> v_%d;\n", i, j);
+      int j;
+      for (j = 0; j < G->V; j++)
+         if (G->adj[i][j])
+            fprintf(out, "v_%d -> v_%d;\n", i, j);
 #endif
-  }
-  fprintf(out, "}\n");
-  fclose(out);
+   }
+   fprintf(out, "}\n");
+   fclose(out);
 }
 #undef IMG_SIZE_X
 #undef IMG_SIZE_Y
@@ -178,52 +178,51 @@ void draw_graph(Digraph G, pair *pts, char *filename) {
 #define SEED 123456
 
 int main(int argc, char *args[]) {
-  int v;
-  char *filename;
-  double d;
-  pair *pts;
-  Digraph G;
+   int v;
+   char *filename;
+   double d;
+   pair *pts;
+   Digraph G;
 
-  if (argc < 3) {
-    puts("Uso: ./ep v d [filename]\n"
-        "  v: numero maximo de pontos/vertices.\n"
-        "  d: distancia para se criar uma aresta no grafo.\n"
-        "  filename: cria um arquivo filename com a representacao do "
-        "grafo em Graphviz Dot (argumento opcional).");
-    return 1;
-  }
+   if (argc < 3) {
+      puts("Uso: ./ep v d [filename]\n"
+         "  v: numero maximo de pontos/vertices.\n"
+         "  d: distancia para se criar uma aresta no grafo.\n"
+         "  filename: cria um arquivo filename com a representacao do "
+         "grafo em Graphviz Dot (argumento opcional).");
+      return 1;
+   }
 
-  v = atoi(args[1]);
-  d = atof(args[2]);
-  filename = NULL;
+   v = atoi(args[1]);
+   d = atof(args[2]);
+   filename = NULL;
 
-  if (argc > 2)
-    filename = args[3];
+   if (argc > 2)
+      filename = args[3];
 
-  pts = generate_points(v, SEED);
-  G = compile_graph(v, d, pts);
+   pts = generate_points(v, SEED);
+   G = compile_graph(v, d, pts);
 
-  printf("Grafo criado, com %d vertices e %d arcos (%d arestas) a "
+   printf("Grafo criado, com %d vertices e %d arcos (%d arestas) a "
       "partir da distancia %.3f.\n", v, G->A, G->A / 2, d);
 
-  if (test_graph(G, d, pts)) {
-    puts("Nao passou no teste.");
-  } else {
-    puts("Passou no teste.");
-  }
+   if (test_graph(G, d, pts))
+      puts("Nao passou no teste.");
+   else
+      puts("Passou no teste.");
 
-  if (v < 100 && G->A < 1000) {
-    puts("Desenhando grafo na saida padrao.");
-    DIGRAPHshow(G);
-  }
+   if (v < 100 && G->A < 1000) {
+      puts("Desenhando grafo na saida padrao.");
+      DIGRAPHshow(G);
+   }
 
-  if (filename != NULL) {
-    printf("Desenhando grafo no arquivo %s.\n", filename);
-    draw_graph(G, pts, filename);
-  }
+   if (filename != NULL) {
+      printf("Desenhando grafo no arquivo %s.\n", filename);
+      draw_graph(G, pts, filename);
+   }
 
-  DIGRAPHdestroy(G);
-  free(pts);
+   DIGRAPHdestroy(G);
+   free(pts);
 
-  return 0;
+   return 0;
 }

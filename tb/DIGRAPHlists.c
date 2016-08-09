@@ -24,119 +24,119 @@
 #include <stdio.h>
 
 static link NEWnode(Vertex w, link next) {
-  link a = malloc(sizeof(struct node));
-  a->w = w;
-  a->next = next;
-  return a;
+   link a = malloc(sizeof(struct node));
+   a->w = w;
+   a->next = next;
+   return a;
 }
 
 Digraph DIGRAPHinit(int V) {
-  Vertex v;
-  Digraph G = malloc(sizeof *G);
-  G->V = V;
-  G->A = 0;
-  G->adj = malloc(V * sizeof(link));
-  for (v = 0; v < V; v++)
-    G->adj[v] = NULL;
-  return G;
+   Vertex v;
+   Digraph G = malloc(sizeof *G);
+   G->V = V;
+   G->A = 0;
+   G->adj = malloc(V * sizeof(link));
+   for (v = 0; v < V; v++)
+      G->adj[v] = NULL;
+   return G;
 }
 
 void DIGRAPHdestroy(Digraph G) {
-  int i;
-  for (i = 0; i < G->V; i++) {
-    link it, next;
-    it = G->adj[i];
-    next = NULL;
-    while (it != NULL) {
-      next = it->next;
-      free(it);
-      it = next;
-    }
-  }
-  free(G->adj);
-  free(G);
+   int i;
+   for (i = 0; i < G->V; i++) {
+      link it, next;
+      it = G->adj[i];
+      next = NULL;
+      while (it != NULL) {
+         next = it->next;
+         free(it);
+         it = next;
+      }
+   }
+   free(G->adj);
+   free(G);
 }
 
 void DIGRAPHinsertA(Digraph G, Vertex v, Vertex w) {
-  link a;
-  for (a = G->adj[v]; a != NULL; a = a->next)
-    if (a->w == w) return;
-  G->adj[v] = NEWnode(w, G->adj[v]);
-  G->A++;
+   link a;
+   for (a = G->adj[v]; a != NULL; a = a->next)
+      if (a->w == w) return;
+   G->adj[v] = NEWnode(w, G->adj[v]);
+   G->A++;
 }
 
 void DIGRAPHremoveA(Digraph G, Vertex v, Vertex w) {
-  link prev = G->adj[v];
-  link nb = prev;
+   link prev = G->adj[v];
+   link nb = prev;
 
-  while (nb != NULL) {
-    if (nb->w == w) {
-      link next = nb->next;
-      free(nb);
-      prev->next = next;
-      return;
-    }
-    prev = nb;
-    nb = nb->next;
-  }
+   while (nb != NULL) {
+      if (nb->w == w) {
+         link next = nb->next;
+         free(nb);
+         prev->next = next;
+         return;
+      }
+      prev = nb;
+      nb = nb->next;
+   }
 }
 
 void DIGRAPHshow(Digraph G) {
-  int i;
-  for (i = 0; i < G->V; i++) {
-    link it = G->adj[i];
-    printf("%2d:", i);
-    while (it != NULL) {
-      printf(" %2d", it->w);
-      it = it->next;
-    }
-    putchar('\n');
-  }
+   int i;
+   for (i = 0; i < G->V; i++) {
+      link it = G->adj[i];
+      printf("%2d:", i);
+      while (it != NULL) {
+         printf(" %2d", it->w);
+         it = it->next;
+      }
+      putchar('\n');
+   }
 }
 
 int DIGRAPHindeg(Digraph G, Vertex v) {
-  int i, id = 0;
-  for (i = 0; i < G->V; i++) {
-    link nb = G->adj[i];
-    while (nb != NULL) {
-      if (nb->w == v) ++id;
-      nb = nb->next;
-    }
-  }
-  return id;
+   int i, id = 0;
+   for (i = 0; i < G->V; i++) {
+      link nb = G->adj[i];
+      while (nb != NULL) {
+         if (nb->w == v) ++id;
+         nb = nb->next;
+      }
+   }
+   return id;
 }
 
 int DIGRAPHoutdeg(Digraph G, Vertex v) {
-  int od = 0;
-  link nb = G->adj[v];
-  while (nb != NULL) {
-    ++od;
-    nb = nb->next;
-  }
-  return od;
+   int od = 0;
+   link nb = G->adj[v];
+   while (nb != NULL) {
+      ++od;
+      nb = nb->next;
+   }
+   return od;
 }
 
 void DIGRAPHdraw(Digraph G, const char *filename) {
-  int i;
-  FILE *out;
+   int i;
+   FILE *out;
 
-  out = fopen(filename, "w");
+   out = fopen(filename, "w");
 
-  if (out == NULL) {
-    printf("Erro ao criar arquivo %s.\n", filename);
-    return;
-  }
+   if (out == NULL) {
+      printf("Erro ao criar arquivo %s.\n", filename);
+      return;
+   }
 
-  fprintf(out, "digraph {\n");
-  for (i = 0; i < G->V; i++)
-    fprintf(out, "v_%d [label=\"%d\", shape=circle];\n", i, i);
-  for (i = 0; i < G->V; i++) {
-    link it = G->adj[i];
-    while (it != NULL) {
-      fprintf(out, "v_%d -> v_%d;\n", i, it->w);
-      it = it->next;
-    }
-  }
-  fprintf(out, "}\n");
-  fclose(out);
+   fprintf(out, "digraph {\n");
+   for (i = 0; i < G->V; i++)
+      fprintf(out, "v_%d [label=\"%d\", shape=circle];\n", i, i);
+   for (i = 0; i < G->V; i++) {
+         link it = G->adj[i];
+      while (it != NULL) {
+         fprintf(out, "v_%d -> v_%d;\n", i, it->w);
+         it = it->next;
+      }
+   }
+   fprintf(out, "}\n");
+   fclose(out);
 }

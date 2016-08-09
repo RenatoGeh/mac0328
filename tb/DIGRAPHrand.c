@@ -26,30 +26,30 @@
  * produz um número inteiro (pseudo)aleatório no intervalo fechado
  * 0..RAND_MAX. */
 Vertex randV(Digraph G) {
-  double r;
-  r = rand() / (RAND_MAX + 1.0);
-  return r * G->V;
+   double r;
+   r = rand() / (RAND_MAX + 1.0);
+   return r * G->V;
 }
 
 Digraph DIGRAPHrand1(int V, int A) {
-  Vertex v, w;
-  Digraph G = DIGRAPHinit(V);
-  while (G->A < A) {
-    v = randV(G);
-    w = randV(G);
-    if (v != w)
-      DIGRAPHinsertA(G, v, w);
-  }
-  return G;
+   Vertex v, w;
+   Digraph G = DIGRAPHinit(V);
+   while (G->A < A) {
+      v = randV(G);
+      w = randV(G);
+      if (v != w)
+         DIGRAPHinsertA(G, v, w);
+   }
+   return G;
 }
 
 Digraph DIGRAPHrand2(int V, int A) {
-  Vertex v, w;
-  double p = (double) A / V / (V-1);
-  Digraph G = DIGRAPHinit(V);
-  for (v = 0; v < V; v++)
-    for (w = 0; w < V; w++)
-      if (v != w && rand() < p*(RAND_MAX+1.0))
-        DIGRAPHinsertA(G, v, w);
-  return G;
+   Vertex v, w;
+   double p = (double) A / V / (V-1);
+   Digraph G = DIGRAPHinit(V);
+   for (v = 0; v < V; v++)
+      for (w = 0; w < V; w++)
+         if (v != w && rand() < p*(RAND_MAX+1.0))
+            DIGRAPHinsertA(G, v, w);
+   return G;
 }

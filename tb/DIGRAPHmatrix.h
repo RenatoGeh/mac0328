@@ -30,9 +30,9 @@
  * adjacências do digrafo. O campo V contém o número de vértices e o
  * campo A contém o número de arcos do digrafo. */
 struct digraph {
-  int V;
-  int A;
-  int **adj;
+   int V;
+   int A;
+   int **adj;
 };
 
 /* Um Digraph é um ponteiro para um digraph, ou seja, um Digraph contém
