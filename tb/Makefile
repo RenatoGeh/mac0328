@@ -22,6 +22,11 @@ CFLAGS = -ansi -pedantic -Wall -Wno-unused-result
 LIBS = -lm
 
 GRAPH = lists
+TEST = true
+
+ifeq ($(TEST), true)
+	CFLAGS += -DTEST=1
+endif
 
 ifeq ($(GRAPH), lists)
 	CFLAGS += -DGRAPH=0
@@ -29,7 +34,8 @@ else
 	CFLAGS += -DGRAPH=1
 endif
 
-DEPS = DIGRAPH$(GRAPH).o DIGRAPHrand.o GRAPHrand.o
+DEPS = DIGRAPH$(GRAPH).o DIGRAPH$(GRAPH)_test.o DIGRAPHrand.o \
+		GRAPHrand.o
 
 all: ep
 
@@ -45,7 +51,13 @@ main.o: main.c
 DIGRAPHlists.o: DIGRAPHlists.c DIGRAPHlists.h
 	gcc -c $(CFLAGS) $^
 
+DIGRAPHlists_test.o: DIGRAPHlists_test.c DIGRAPHlists.h
+	gcc -c $(CFLAGS) $^
+
 DIGRAPHmatrix.o: DIGRAPHmatrix.c DIGRAPHmatrix.h
+	gcc -c $(CFLAGS) $^
+
+DIGRAPHmatrix_test.o: DIGRAPHmatrix_test.c DIGRAPHmatrix.h
 	gcc -c $(CFLAGS) $^
 
 DIGRAPHrand.o: DIGRAPHrand.c DIGRAPHrand.h DIGRAPHlists.h \

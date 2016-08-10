@@ -87,4 +87,10 @@ int DIGRAPHoutdeg(Digraph G, Vertex v);
  * http://www.graphviz.org/. */
 void DIGRAPHdraw(Digraph G, const char *filename);
 
+#ifdef TEST
+/* REPRESENTAÇÃO POR LISTAS DE ADJACÊNCIA: A função DIGRAPHlists_test()
+ * testa as funções de manipulação de digrafos. */
+void DIGRAPHlists_test();
+#endif
+
 #endif

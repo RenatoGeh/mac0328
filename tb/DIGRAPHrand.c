@@ -25,7 +25,7 @@
  * apenas um invólucro para a função rand() da biblioteca stdlib, que
  * produz um número inteiro (pseudo)aleatório no intervalo fechado
  * 0..RAND_MAX. */
-Vertex randV(Digraph G) {
+static Vertex randV(Digraph G) {
    double r;
    r = rand() / (RAND_MAX + 1.0);
    return r * G->V;

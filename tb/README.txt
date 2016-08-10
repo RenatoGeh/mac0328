@@ -51,8 +51,12 @@ GRAPH direto pelo gcc. Por exemplo:
 
 Quando passamos o parâmetro GRAPH direto pelo gcc, temos que:
 
-   - (gcc) DGRAPH=0 == GRAPH=lists  (make)
-   - (gcc) DGRAPH=1 == GRAPH=matrix (make)
+   - (gcc) -DGRAPH=0 == GRAPH=lists  (make)
+   - (gcc) -DGRAPH=1 == GRAPH=matrix (make)
+
+Além de como vamos representar os digrafos, o Makefile também permite
+que compilemos o programa com uma função de testes ou não. Leia a seção
+3 para mais informações.
 
 1.1 DIGRAPHlists
 
@@ -124,3 +128,40 @@ Para instalar o Graphviz no Ubuntu:
 Para instalar o Graphviz no Arch Linux:
 
    sudo pacman -S graphviz
+
+3. Testes
+
+Os testes, com exceção do teste da função geradora do grafo de pontos
+pseudo-aleatórios, foram feitos para serem compilados se e somente se
+uma variável no Makefile for verdadeira. Por default, a variável está
+como verdadeiro. Ou seja,
+
+   $ make
+
+É igual a:
+
+   $ make TEST=true
+
+Para não compilar os testes, use:
+
+   $ make TEST=false
+
+Os testes para matrizes de adjacência são diferentes dos testes de
+listas de adjacência. Portanto,
+
+   $ make TEST=true GRAPH=lists
+
+Gerará um código diferente de
+
+   $ make TEST=true GRAPH=matrix
+
+O programa discutido na seção 2 irá automaticamente executar os testes
+da biblioteca especificada por GRAPH antes de gerar o grafo com os
+pontos pseudo-aleatórios se TEST=true.
+
+Se você desejar passar a variável direto para o gcc, passe-o com
+qualquer valor para compilar com testes. Para não compilar os testes,
+não defina a macro TEST.
+
+   $ (gcc) -DTEST=1 == TEST=true  (make)
+   $ (gcc)          == TEST=false (make)

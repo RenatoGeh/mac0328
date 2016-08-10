@@ -200,16 +200,29 @@ int main(int argc, char *args[]) {
    if (argc > 2)
       filename = args[3];
 
+#ifdef TEST
+   puts("O programa ira testar a biblioteca "GRAPH_HEADER" primeiro.");
+#if GRAPH == 0
+   DIGRAPHlists_test();
+#else
+   DIGRAPHmatrix_test();
+#endif
+#endif
+
+   printf("Gerando %d pontos pseudo-aleatorios com uma semente de "
+         "%d...\n", v, SEED);
    pts = generate_points(v, SEED);
+   printf("Compilando o grafo a partir de %d vertices e distancia "
+         "%f...\n", v, d);
    G = compile_graph(v, d, pts);
 
    printf("Grafo criado, com %d vertices e %d arcos (%d arestas) a "
       "partir da distancia %.3f.\n", v, G->A, G->A / 2, d);
 
    if (test_graph(G, d, pts))
-      puts("Nao passou no teste.");
+      puts("O grafo gerado nao passou no teste.");
    else
-      puts("Passou no teste.");
+      puts("O grafo gerado passou no teste.");
 
    if (v < 100 && G->A < 1000) {
       puts("Desenhando grafo na saida padrao.");

@@ -73,7 +73,10 @@ void DIGRAPHremoveA(Digraph G, Vertex v, Vertex w) {
       if (nb->w == w) {
          link next = nb->next;
          free(nb);
-         prev->next = next;
+         if (prev == G->adj[v])
+            G->adj[v] = next;
+         else
+            prev->next = next;
          return;
       }
       prev = nb;
@@ -99,7 +102,8 @@ int DIGRAPHindeg(Digraph G, Vertex v) {
    for (i = 0; i < G->V; i++) {
       link nb = G->adj[i];
       while (nb != NULL) {
-         if (nb->w == v) ++id;
+         if (nb->w == v)
+            ++id;
          nb = nb->next;
       }
    }
