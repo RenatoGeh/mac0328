@@ -91,8 +91,7 @@ Após compilarmos, teremos um arquivo executável `ep`:
       v: numero maximo de pontos/vertices.
       d: distancia para se criar uma aresta no grafo.
       filename: cria um arquivo filename com a representacao do grafo
-      em
-      Graphviz Dot (argumento opcional).
+      em Graphviz Dot (argumento opcional).
 
 Os parâmetros v e d são explicitadas no enunciado. O parâmetro filename
 é opcional e não consta no enunciado da tarefa. Se não providenciarmos

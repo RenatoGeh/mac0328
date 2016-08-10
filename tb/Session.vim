@@ -21,8 +21,8 @@ badd +26 GRAPHrand.h
 badd +41 Makefile
 badd +241 main.c
 badd +1 ~/gospn/src/io/output.go
-badd +167 README.txt
-badd +1 term://.//20968:/bin/zsh
+badd +94 README.txt
+badd +1 term://.//1008:/bin/zsh
 badd +1 DIGRAPHlists_test.c
 badd +1 DIGRAPHmatrix_test.c
 argglobal
@@ -43,11 +43,11 @@ set nosplitbelow
 set nosplitright
 wincmd t
 set winheight=1 winwidth=1
-exe 'vert 1resize ' . ((&columns * 106 + 106) / 212)
+exe 'vert 1resize ' . ((&columns * 104 + 106) / 212)
 exe '2resize ' . ((&lines * 29 + 30) / 61)
-exe 'vert 2resize ' . ((&columns * 105 + 106) / 212)
+exe 'vert 2resize ' . ((&columns * 107 + 106) / 212)
 exe '3resize ' . ((&lines * 28 + 30) / 61)
-exe 'vert 3resize ' . ((&columns * 105 + 106) / 212)
+exe 'vert 3resize ' . ((&columns * 107 + 106) / 212)
 argglobal
 edit DIGRAPHlists.h
 setlocal fdm=manual
@@ -59,11 +59,11 @@ setlocal fml=1
 setlocal fdn=20
 setlocal fen
 silent! normal! zE
-let s:l = 94 - ((55 * winheight(0) + 29) / 58)
+let s:l = 93 - ((54 * winheight(0) + 29) / 58)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-94
+93
 normal! 0
 wincmd w
 argglobal
@@ -77,12 +77,12 @@ setlocal fml=1
 setlocal fdn=20
 setlocal fen
 silent! normal! zE
-let s:l = 71 - ((12 * winheight(0) + 14) / 29)
+let s:l = 18 - ((17 * winheight(0) + 14) / 29)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-71
-normal! 04|
+18
+normal! 030|
 wincmd w
 argglobal
 edit DIGRAPHlists.c
@@ -95,18 +95,19 @@ setlocal fml=1
 setlocal fdn=20
 setlocal fen
 silent! normal! zE
-let s:l = 118 - ((24 * winheight(0) + 14) / 28)
+let s:l = 1 - ((0 * winheight(0) + 14) / 28)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-118
-normal! 07|
+1
+normal! 0
 wincmd w
-exe 'vert 1resize ' . ((&columns * 106 + 106) / 212)
+2wincmd w
+exe 'vert 1resize ' . ((&columns * 104 + 106) / 212)
 exe '2resize ' . ((&lines * 29 + 30) / 61)
-exe 'vert 2resize ' . ((&columns * 105 + 106) / 212)
+exe 'vert 2resize ' . ((&columns * 107 + 106) / 212)
 exe '3resize ' . ((&lines * 28 + 30) / 61)
-exe 'vert 3resize ' . ((&columns * 105 + 106) / 212)
+exe 'vert 3resize ' . ((&columns * 107 + 106) / 212)
 tabedit DIGRAPHmatrix.h
 set splitbelow splitright
 wincmd _ | wincmd |
@@ -155,12 +156,12 @@ setlocal fml=1
 setlocal fdn=20
 setlocal fen
 silent! normal! zE
-let s:l = 75 - ((24 * winheight(0) + 14) / 29)
+let s:l = 18 - ((17 * winheight(0) + 14) / 29)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-75
-normal! 024|
+18
+normal! 030|
 wincmd w
 argglobal
 edit DIGRAPHmatrix.c
@@ -358,15 +359,15 @@ setlocal fml=1
 setlocal fdn=20
 setlocal fen
 silent! normal! zE
-let s:l = 167 - ((54 * winheight(0) + 29) / 58)
+let s:l = 166 - ((53 * winheight(0) + 29) / 58)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-167
+166
 normal! 035|
 wincmd w
 argglobal
-edit term://.//20968:/bin/zsh
+edit term://.//1008:/bin/zsh
 setlocal fdm=manual
 setlocal fde=0
 setlocal fmr={{{,}}}
@@ -384,7 +385,7 @@ normal! 0
 wincmd w
 exe 'vert 1resize ' . ((&columns * 106 + 106) / 212)
 exe 'vert 2resize ' . ((&columns * 105 + 106) / 212)
-tabnext 6
+tabnext 1
 if exists('s:wipebuf') && getbufvar(s:wipebuf, '&buftype') isnot# 'terminal'
   silent exe 'bwipe ' . s:wipebuf
 endif

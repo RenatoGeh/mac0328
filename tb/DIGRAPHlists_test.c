@@ -1,3 +1,22 @@
+/* DECLARO QUE SOU O UNICO AUTOR E RESPONSAVEL POR ESTE PROGRAMA.
+// TODAS AS PARTES DO PROGRAMA, EXCETO AS QUE FORAM FORNECIDAS
+// PELO PROFESSOR OU COPIADAS DO LIVRO OU DAS BIBLIOTECAS DE
+// SEDGEWICK OU ROBERTS, FORAM DESENVOLVIDAS POR MIM.  DECLARO
+// TAMBEM QUE SOU RESPONSAVEL POR TODAS AS COPIAS DESTE PROGRAMA
+// E QUE NAO DISTRIBUI NEM FACILITEI A DISTRIBUICAO DE COPIAS.
+//
+// Autor:      Renato Lui Geh
+// Numero USP: 8536030
+// Sigla:      RENATOLU
+// Data:       2016-08-07
+//
+// Este arquivo faz parte da tarefa B
+// da disciplina MAC0328.
+//
+////////////////////////////////////////////////////////////// */
+
+/* Funções teste da biblioteca DIGRAPHlist.h. */
+
 #include "DIGRAPHlists.h"
 
 #include <stdlib.h>
@@ -18,6 +37,7 @@ static void DIGRAPHinit_test(int V) {
       link it = G->adj[i];
       assert(it == NULL);
    }
+   DIGRAPHdestroy(G);
 }
 
 /* REPRESENTAÇÃO POR LISTAS DE ADJACÊNCIA: A função
@@ -107,6 +127,7 @@ void DIGRAPHlists_test() {
    DIGRAPHremoveA_test(G, 2, 4);
    DIGRAPHindeg_test(G, 5);
    DIGRAPHoutdeg_test(G, 7);
+   DIGRAPHdestroy(G);
 #undef V
    puts("DIGRAPHlists passou em todos os testes.");
 }
