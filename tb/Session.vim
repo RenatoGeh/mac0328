@@ -9,7 +9,7 @@ endif
 set shortmess=aoO
 badd +87 DIGRAPHmatrix.h
 badd +58 DIGRAPHmatrix.c
-badd +94 DIGRAPHlists.h
+badd +93 DIGRAPHlists.h
 badd +1 DIGRAPHlists.c
 badd +1 ~/Documents/EPs/mac0328/guidelines
 badd +1 DIGRAPHrand.c
@@ -21,8 +21,8 @@ badd +26 GRAPHrand.h
 badd +41 Makefile
 badd +241 main.c
 badd +1 ~/gospn/src/io/output.go
-badd +94 README.txt
-badd +1 term://.//1008:/bin/zsh
+badd +166 README.txt
+badd +1 term://.//15811:/bin/zsh
 badd +1 DIGRAPHlists_test.c
 badd +1 DIGRAPHmatrix_test.c
 argglobal
@@ -77,12 +77,12 @@ setlocal fml=1
 setlocal fdn=20
 setlocal fen
 silent! normal! zE
-let s:l = 18 - ((17 * winheight(0) + 14) / 29)
+let s:l = 21 - ((20 * winheight(0) + 14) / 29)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-18
-normal! 030|
+21
+normal! 0
 wincmd w
 argglobal
 edit DIGRAPHlists.c
@@ -102,7 +102,6 @@ normal! zt
 1
 normal! 0
 wincmd w
-2wincmd w
 exe 'vert 1resize ' . ((&columns * 104 + 106) / 212)
 exe '2resize ' . ((&lines * 29 + 30) / 61)
 exe 'vert 2resize ' . ((&columns * 107 + 106) / 212)
@@ -227,12 +226,12 @@ setlocal fml=1
 setlocal fdn=20
 setlocal fen
 silent! normal! zE
-let s:l = 54 - ((53 * winheight(0) + 29) / 58)
+let s:l = 24 - ((23 * winheight(0) + 29) / 58)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-54
-normal! 06|
+24
+normal! 0
 wincmd w
 exe 'vert 1resize ' . ((&columns * 106 + 106) / 212)
 exe 'vert 2resize ' . ((&columns * 105 + 106) / 212)
@@ -367,7 +366,7 @@ normal! zt
 normal! 035|
 wincmd w
 argglobal
-edit term://.//1008:/bin/zsh
+edit term://.//15811:/bin/zsh
 setlocal fdm=manual
 setlocal fde=0
 setlocal fmr={{{,}}}
@@ -376,11 +375,11 @@ setlocal fdl=0
 setlocal fml=1
 setlocal fdn=20
 setlocal fen
-let s:l = 58 - ((57 * winheight(0) + 29) / 58)
+let s:l = 29 - ((28 * winheight(0) + 29) / 58)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-58
+29
 normal! 0
 wincmd w
 exe 'vert 1resize ' . ((&columns * 106 + 106) / 212)
