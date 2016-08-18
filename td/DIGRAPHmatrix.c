@@ -44,8 +44,10 @@ Digraph DIGRAPHinit(int V) {
    G->A = 0;
    G->adj = MATRIXinit(V, V, 0);
    G->pre = (int*) malloc(V * sizeof(int));
+   G->pos = malloc(V * sizeof(int));
+   G->pai = malloc(V * sizeof(int));
    for (i = 0; i < V; ++i)
-      G->pre[i] = -1;
+      G->pre[i] = G->pos[i] = G->pai[i] = -1;
    return G;
 }
 
@@ -55,6 +57,8 @@ void DIGRAPHdestroy(Digraph G) {
       free(G->adj[i]);
    free(G->adj);
    free(G->pre);
+   free(G->pos);
+   free(G->pai);
    free(G);
 }
 
@@ -179,7 +183,7 @@ Digraph GRAPHrand2(int V, int E) {
    return G;
 }
 
-static int dfs_trailing;
+static int pre_count, pos_count;
 /* Seja U o conjunto dos vértices u tais que pre[u] >= 0. Nesse
  * ambiente, para cada vértice x acessível a partir de v por um caminho
  * que não usa vértices de U, a função dfsR() atribui um número
@@ -187,31 +191,24 @@ static int dfs_trailing;
  * recebe dfs_conta+k. (Código inspirado no programa 18.1 de
  * Sedgewick.)
  * */
-static int dfsR(Digraph G, Vertex v, int count) {
+static void dfsR(Digraph G, Vertex v) {
    Vertex w;
-   G->pre[v] = count++;
-   dfs_trailing += 2;
+   G->pre[v] = pre_count++;
    for (w = 0; w < G->V; w++)
-      if (G->adj[v][w] != 0) {
-         printf("%*c%d-%d", dfs_trailing, ' ', v, w);
+      if (G->adj[v][w] != 0)
          if (G->pre[w] == -1) {
-            printf(" dfsR(G, %d)\n", w);
-            count = dfsR(G, w, count);
-         } else putchar('\n');
-      }
-   dfs_trailing -= 2;
-   return count;
+            G->pai[v] = w;
+            dfsR(G, w);
+         }
+   G->pos[v] = pos_count++;
 }
 
 void DIGRAPHdfs(Digraph G) {
    Vertex v;
-   int count = 0;
-   dfs_trailing = 0;
+   pre_count = pos_count = 0;
    for (v = 0; v < G->V; v++)
       G->pre[v] = -1;
    for (v = 0; v < G->V; v++)
-      if (G->pre[v] == -1) {
-         printf("dfsR(G, %d)\n", v);
-         count = dfsR(G, v, count);
-      }
+      if (G->pre[v] == -1)
+         dfsR(G, v);
 }

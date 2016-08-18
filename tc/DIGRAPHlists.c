@@ -57,6 +57,7 @@ void DIGRAPHdestroy(Digraph G) {
       }
    }
    free(G->adj);
+   free(G->pre);
    free(G);
 }
 

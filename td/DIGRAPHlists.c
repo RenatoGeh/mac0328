@@ -15,90 +15,119 @@
 //
 ////////////////////////////////////////////////////////////// */
 
-/* Biblioteca para representação de digrafos em formato de matriz de
+/* Biblioteca para representação de digrafos em formato de lista de
  * adjacência. */
 
-#include "DIGRAPHmatrix.h"
+#include "DIGRAPHlists.h"
 
 #include <stdlib.h>
 #include <stdio.h>
 
-/* REPRESENTAÇÃO POR MATRIZ DE ADJACÊNCIAS: A função MATRIXinit() aloca
- * uma matriz com linhas 0..r-1 e colunas 0..c-1. Cada elemento da
- * matriz recebe valor val. */
-static int **MATRIXinit(int r, int c, int val) {
-   Vertex i, j;
-   int **m = malloc(r * sizeof (int *));
-   for (i = 0; i < r; i++)
-      m[i] = malloc(c * sizeof (int));
-   for (i = 0; i < r; i++)
-      for (j = 0; j < c; j++)
-         m[i][j] = val;
-   return m;
+static link NEWnode(Vertex w, link next) {
+   link a = malloc(sizeof(struct node));
+   a->w = w;
+   a->next = next;
+   return a;
 }
 
 Digraph DIGRAPHinit(int V) {
-   int i;
+   Vertex v;
    Digraph G = malloc(sizeof *G);
    G->V = V;
    G->A = 0;
-   G->adj = MATRIXinit(V, V, 0);
-   G->pre = (int*) malloc(V * sizeof(int));
-   for (i = 0; i < V; ++i)
-      G->pre[i] = -1;
+   G->adj = malloc(V * sizeof(link));
+   G->pre = malloc(V * sizeof(int));
+   G->pos = malloc(V * sizeof(int));
+   G->pai = malloc(V * sizeof(int));
+   for (v = 0; v < V; v++) {
+      G->adj[v] = NULL;
+      G->pre[v] = G->pos[v] = G->pai[v] = -1;
+   }
    return G;
 }
 
 void DIGRAPHdestroy(Digraph G) {
    int i;
-   for (i = 0; i < G->V; i++)
-      free(G->adj[i]);
+   for (i = 0; i < G->V; i++) {
+      link it, next;
+      it = G->adj[i];
+      next = NULL;
+      while (it != NULL) {
+         next = it->next;
+         free(it);
+         it = next;
+      }
+   }
    free(G->adj);
    free(G->pre);
    free(G);
 }
 
 void DIGRAPHinsertA(Digraph G, Vertex v, Vertex w) {
-   if (G->adj[v][w] == 0) {
-      G->adj[v][w] = 1;
-      G->A++;
-   }
+   link a;
+   for (a = G->adj[v]; a != NULL; a = a->next)
+      if (a->w == w) return;
+   G->adj[v] = NEWnode(w, G->adj[v]);
+   G->A++;
 }
 
 void DIGRAPHremoveA(Digraph G, Vertex v, Vertex w) {
-   if (G->adj[v][w] == 1) {
-      G->adj[v][w] = 0;
-      G->A--;
+   link prev = G->adj[v];
+   link nb = prev;
+
+   while (nb != NULL) {
+      if (nb->w == w) {
+         link next = nb->next;
+         free(nb);
+         if (prev == G->adj[v])
+            G->adj[v] = next;
+         else
+            prev->next = next;
+         return;
+      }
+      prev = nb;
+      nb = nb->next;
    }
 }
 
 void DIGRAPHshow(Digraph G) {
-   Vertex v, w;
-   for (v = 0; v < G->V; v++) {
-      printf("%2d:", v);
-      for (w = 0; w < G->V; w++)
-         if (G->adj[v][w] == 1)
-            printf(" %2d", w);
-      printf("\n");
+   int i;
+   for (i = 0; i < G->V; i++) {
+      link it = G->adj[i];
+      printf("%2d:", i);
+      while (it != NULL) {
+         printf(" %2d", it->w);
+         it = it->next;
+      }
+      putchar('\n');
    }
 }
 
 int DIGRAPHindeg(Digraph G, Vertex v) {
    int i, id = 0;
-   for (i = 0; i < G->V; i++)
-      id += G->adj[i][v];
+   for (i = 0; i < G->V; i++) {
+      link nb = G->adj[i];
+      while (nb != NULL) {
+         if (nb->w == v)
+            ++id;
+         nb = nb->next;
+      }
+   }
    return id;
 }
 
 int DIGRAPHoutdeg(Digraph G, Vertex v) {
-   int i, od = 0;
-   for (i = 0; i < G->V; i++)
-      od += G->adj[v][i];
+   int od = 0;
+   link nb = G->adj[v];
+   while (nb != NULL) {
+      ++od;
+      nb = nb->next;
+   }
    return od;
 }
 
 void DIGRAPHdraw(Digraph G, const char *filename) {
-   int i, j;
+   int i;
    FILE *out;
 
    out = fopen(filename, "w");
@@ -111,10 +140,13 @@ void DIGRAPHdraw(Digraph G, const char *filename) {
    fprintf(out, "digraph {\n");
    for (i = 0; i < G->V; i++)
       fprintf(out, "v_%d [label=\"%d\", shape=circle];\n", i, i);
-   for (i = 0; i < G->V; i++)
-      for (j = 0; j < G->V; j++)
-         if (G->adj[i][j])
-           fprintf(out, "v_%d -> v_%d;\n", i, j);
+   for (i = 0; i < G->V; i++) {
+         link it = G->adj[i];
+      while (it != NULL) {
+         fprintf(out, "v_%d -> v_%d;\n", i, it->w);
+         it = it->next;
+      }
+   }
    fprintf(out, "}\n");
    fclose(out);
 }
@@ -179,7 +211,7 @@ Digraph GRAPHrand2(int V, int E) {
    return G;
 }
 
-static int dfs_trailing;
+static int pre_count, pos_count;
 /* Seja U o conjunto dos vértices u tais que pre[u] >= 0. Nesse
  * ambiente, para cada vértice x acessível a partir de v por um caminho
  * que não usa vértices de U, a função dfsR() atribui um número
@@ -187,31 +219,23 @@ static int dfs_trailing;
  * recebe dfs_conta+k. (Código inspirado no programa 18.1 de
  * Sedgewick.)
  * */
-static int dfsR(Digraph G, Vertex v, int count) {
-   Vertex w;
-   G->pre[v] = count++;
-   dfs_trailing += 2;
-   for (w = 0; w < G->V; w++)
-      if (G->adj[v][w] != 0) {
-         printf("%*c%d-%d", dfs_trailing, ' ', v, w);
-         if (G->pre[w] == -1) {
-            printf(" dfsR(G, %d)\n", w);
-            count = dfsR(G, w, count);
-         } else putchar('\n');
+static void dfsR(Digraph G, Vertex v) {
+   link it;
+   G->pre[v] = pre_count++;
+   for (it = G->adj[v]; it != NULL; it = it->next)
+      if (G->pre[it->w] == -1) {
+         G->pai[it->w] = v;
+         dfsR(G, it->w);
       }
-   dfs_trailing -= 2;
-   return count;
+   G->pos[v] = pos_count++;
 }
 
 void DIGRAPHdfs(Digraph G) {
    Vertex v;
-   int count = 0;
-   dfs_trailing = 0;
+   pre_count = pos_count = 0;
    for (v = 0; v < G->V; v++)
       G->pre[v] = -1;
    for (v = 0; v < G->V; v++)
-      if (G->pre[v] == -1) {
-         printf("dfsR(G, %d)\n", v);
-         count = dfsR(G, v, count);
-      }
+      if (G->pre[v] == -1)
+         dfsR(G, v);
 }

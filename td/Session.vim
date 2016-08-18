@@ -2,14 +2,14 @@ let SessionLoad = 1
 let s:so_save = &so | let s:siso_save = &siso | set so=0 siso=0
 let v:this_session=expand("<sfile>:p")
 silent only
-cd ~/Documents/EPs/mac0328/tc
+cd ~/Documents/EPs/mac0328/td
 if expand('%') == '' && !&modified && line('$') <= 1 && getline(1) == ''
   let s:wipebuf = bufnr('%')
 endif
 set shortmess=aoO
-badd +14 DIGRAPHmatrix.h
+badd +38 DIGRAPHmatrix.h
 badd +197 DIGRAPHmatrix.c
-badd +13 DIGRAPHlists.h
+badd +48 DIGRAPHlists.h
 badd +1 DIGRAPHlists.c
 badd +1 ~/Documents/EPs/mac0328/guidelines
 badd +1 DIGRAPHrand.c
@@ -18,14 +18,14 @@ badd +1 DIGRAPHproto.c
 badd +1 DIGRAPHproto.h
 badd +24 GRAPHrand.c
 badd +26 GRAPHrand.h
-badd +43 Makefile
-badd +44 main.c
+badd +13 Makefile
+badd +14 main.c
 badd +1 ~/gospn/src/io/output.go
 badd +13 README.txt
-badd +1 term://.//7613:/bin/zsh
+badd +1 term://.//31846:/bin/zsh
 badd +56 DIGRAPHlists_test.c
 badd +19 DIGRAPHmatrix_test.c
-badd +14 rastro.c
+badd +100 rastro.c
 argglobal
 silent! argdel *
 argadd DIGRAPHmatrix.h
@@ -53,12 +53,12 @@ setlocal fml=1
 setlocal fdn=20
 setlocal fen
 silent! normal! zE
-let s:l = 13 - ((12 * winheight(0) + 29) / 58)
+let s:l = 48 - ((47 * winheight(0) + 29) / 58)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-13
-normal! 037|
+48
+normal! 012|
 wincmd w
 argglobal
 edit DIGRAPHlists.c
@@ -71,14 +71,13 @@ setlocal fml=1
 setlocal fdn=20
 setlocal fen
 silent! normal! zE
-let s:l = 240 - ((51 * winheight(0) + 29) / 58)
+let s:l = 230 - ((47 * winheight(0) + 29) / 58)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-240
-normal! 0
+230
+normal! 04|
 wincmd w
-2wincmd w
 exe 'vert 1resize ' . ((&columns * 104 + 106) / 212)
 exe 'vert 2resize ' . ((&columns * 107 + 106) / 212)
 tabedit DIGRAPHmatrix.h
@@ -104,12 +103,12 @@ setlocal fml=1
 setlocal fdn=20
 setlocal fen
 silent! normal! zE
-let s:l = 14 - ((13 * winheight(0) + 29) / 58)
+let s:l = 39 - ((38 * winheight(0) + 29) / 58)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-14
-normal! 025|
+39
+normal! 02|
 wincmd w
 argglobal
 edit DIGRAPHmatrix.c
@@ -122,16 +121,16 @@ setlocal fml=1
 setlocal fdn=20
 setlocal fen
 silent! normal! zE
-let s:l = 217 - ((57 * winheight(0) + 29) / 58)
+let s:l = 159 - ((57 * winheight(0) + 29) / 58)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-217
+159
 normal! 0
 wincmd w
 exe 'vert 1resize ' . ((&columns * 106 + 106) / 212)
 exe 'vert 2resize ' . ((&columns * 105 + 106) / 212)
-tabedit rastro.c
+tabedit main.c
 set splitbelow splitright
 wincmd _ | wincmd |
 vsplit
@@ -141,10 +140,10 @@ set nosplitbelow
 set nosplitright
 wincmd t
 set winheight=1 winwidth=1
-exe 'vert 1resize ' . ((&columns * 104 + 106) / 212)
-exe 'vert 2resize ' . ((&columns * 107 + 106) / 212)
+exe 'vert 1resize ' . ((&columns * 106 + 106) / 212)
+exe 'vert 2resize ' . ((&columns * 105 + 106) / 212)
 argglobal
-edit rastro.c
+edit main.c
 setlocal fdm=manual
 setlocal fde=0
 setlocal fmr={{{,}}}
@@ -154,11 +153,11 @@ setlocal fml=1
 setlocal fdn=20
 setlocal fen
 silent! normal! zE
-let s:l = 100 - ((57 * winheight(0) + 29) / 58)
+let s:l = 2 - ((1 * winheight(0) + 29) / 58)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-100
+2
 normal! 0
 wincmd w
 argglobal
@@ -172,15 +171,15 @@ setlocal fml=1
 setlocal fdn=20
 setlocal fen
 silent! normal! zE
-let s:l = 13 - ((12 * winheight(0) + 29) / 58)
+let s:l = 38 - ((37 * winheight(0) + 29) / 58)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-13
-normal! 037|
+38
+normal! 0
 wincmd w
-exe 'vert 1resize ' . ((&columns * 104 + 106) / 212)
-exe 'vert 2resize ' . ((&columns * 107 + 106) / 212)
+exe 'vert 1resize ' . ((&columns * 106 + 106) / 212)
+exe 'vert 2resize ' . ((&columns * 105 + 106) / 212)
 tabedit README.txt
 set splitbelow splitright
 wincmd _ | wincmd |
@@ -212,7 +211,7 @@ normal! zt
 normal! 037|
 wincmd w
 argglobal
-edit term://.//7613:/bin/zsh
+edit term://.//31846:/bin/zsh
 setlocal fdm=manual
 setlocal fde=0
 setlocal fmr={{{,}}}
@@ -221,16 +220,16 @@ setlocal fdl=0
 setlocal fml=1
 setlocal fdn=20
 setlocal fen
-let s:l = 58 - ((0 * winheight(0) + 29) / 58)
+let s:l = 29 - ((28 * winheight(0) + 29) / 58)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-58
+29
 normal! 0
 wincmd w
 exe 'vert 1resize ' . ((&columns * 104 + 106) / 212)
 exe 'vert 2resize ' . ((&columns * 107 + 106) / 212)
-tabnext 1
+tabnext 3
 if exists('s:wipebuf') && getbufvar(s:wipebuf, '&buftype') isnot# 'terminal'
   silent exe 'bwipe ' . s:wipebuf
 endif

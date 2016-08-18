@@ -22,7 +22,7 @@ badd +41 Makefile
 badd +241 main.c
 badd +1 ~/gospn/src/io/output.go
 badd +166 README.txt
-badd +1 term://.//15811:/bin/zsh
+badd +1 term://.//2206:/bin/zsh
 badd +1 DIGRAPHlists_test.c
 badd +1 DIGRAPHmatrix_test.c
 argglobal
@@ -77,11 +77,11 @@ setlocal fml=1
 setlocal fdn=20
 setlocal fen
 silent! normal! zE
-let s:l = 21 - ((20 * winheight(0) + 14) / 29)
+let s:l = 133 - ((28 * winheight(0) + 14) / 29)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-21
+133
 normal! 0
 wincmd w
 argglobal
@@ -95,11 +95,11 @@ setlocal fml=1
 setlocal fdn=20
 setlocal fen
 silent! normal! zE
-let s:l = 1 - ((0 * winheight(0) + 14) / 28)
+let s:l = 146 - ((27 * winheight(0) + 14) / 28)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-1
+146
 normal! 0
 wincmd w
 exe 'vert 1resize ' . ((&columns * 104 + 106) / 212)
@@ -173,11 +173,11 @@ setlocal fml=1
 setlocal fdn=20
 setlocal fen
 silent! normal! zE
-let s:l = 8 - ((7 * winheight(0) + 14) / 28)
+let s:l = 93 - ((0 * winheight(0) + 14) / 28)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-8
+93
 normal! 0
 wincmd w
 exe 'vert 1resize ' . ((&columns * 106 + 106) / 212)
@@ -208,11 +208,11 @@ setlocal fml=1
 setlocal fdn=20
 setlocal fen
 silent! normal! zE
-let s:l = 29 - ((28 * winheight(0) + 29) / 58)
+let s:l = 30 - ((29 * winheight(0) + 29) / 58)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-29
+30
 normal! 0
 wincmd w
 argglobal
@@ -308,11 +308,11 @@ setlocal fml=1
 setlocal fdn=20
 setlocal fen
 silent! normal! zE
-let s:l = 241 - ((57 * winheight(0) + 29) / 58)
+let s:l = 84 - ((0 * winheight(0) + 29) / 58)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-241
+84
 normal! 0
 wincmd w
 argglobal
@@ -366,7 +366,7 @@ normal! zt
 normal! 035|
 wincmd w
 argglobal
-edit term://.//15811:/bin/zsh
+edit term://.//2206:/bin/zsh
 setlocal fdm=manual
 setlocal fde=0
 setlocal fmr={{{,}}}
@@ -384,7 +384,7 @@ normal! 0
 wincmd w
 exe 'vert 1resize ' . ((&columns * 106 + 106) / 212)
 exe 'vert 2resize ' . ((&columns * 105 + 106) / 212)
-tabnext 1
+tabnext 5
 if exists('s:wipebuf') && getbufvar(s:wipebuf, '&buftype') isnot# 'terminal'
   silent exe 'bwipe ' . s:wipebuf
 endif
