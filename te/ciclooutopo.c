@@ -23,29 +23,66 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#ifndef GRAPH
-#define GRAPH 1
-#endif
+#include "DIGRAPHmatrix.h"
 
-#if GRAPH == 0
-#define GRAPH_HEADER "DIGRAPHlists.h"
-#else
-#define GRAPH_HEADER "DIGRAPHmatrix.h"
-#endif
+/* Uma pilha implementada por meio de um vetor cíclico. */
+typedef struct {
+   int *data;
+   int n, cap;
+} stack;
 
-#include GRAPH_HEADER
+/* Cria uma nova pilha com capacidade V. */
+stack *new_stack(int V) {
+   stack *st;
+   st = (stack*) malloc(sizeof(stack));
+   st->data = (int*) malloc(V * sizeof(int));
+   st->n = 0;
+   st->cap = V;
+   return st;
+}
+
+/* Coloca o elemento v no topo da pilha st. */
+void stack_push(stack *st, int v) {
+   if (st->n + 1 > st->cap) {
+      puts("Pilha cheia.");
+      return;
+   }
+   st->data[st->n++] = v;
+}
+
+/* Desempilha o elemento do topo da pilha st. */
+int stack_pop(stack *st) {
+   if (st->n < 1) {
+      puts("Pilha vazia.");
+      return -1;
+   }
+   return st->data[--st->n];
+}
+
+/* Retorna 1 se a pilha st está vazia. 0 caso contrário. */
+int stack_empty(stack *st) {
+   return st->n == 0;
+}
+
+/* Libera a memória da pilha st. */
+void free_stack(stack *st) {
+   free(st->data);
+   free(st);
+}
+
+stack *cstack;
 
 /* Supõe que v faz parte de um ciclo. Faz uma DFS a partir do vértice
  * u até achar um ciclo. Quando acha, faz a "volta" imprimindo o
  * caminho. Pela hipótese anterior, print_cycle() sempre acha um ciclo
  * em tempo O(V+A). */
-int print_cycle(Digraph G, Vertex v, Vertex u, int first) {
+int find_cycle(Digraph G, Vertex v, Vertex u, int first) {
    int i;
    if (v == u && !first) return 1;
    for (i = 0; i < G->V; ++i) {
       if (i == u) continue;
-      if (G->adj[u][i] && print_cycle(G, v, i, 0)) {
-            printf(" %d", i);
+      if (G->adj[u][i] && find_cycle(G, v, i, 0)) {
+            stack_push(cstack, i);
             return 1;
       }
    }
@@ -69,9 +106,14 @@ int main(int argc, char *args[]) {
       putchar('\n');
       free(top);
    } else {
+      cstack = new_stack(G->V);
       printf("Ciclo contem vertices:\n ");
-      print_cycle(G, c, c, 1);
+      find_cycle(G, c, c, 1);
+      printf("%d", stack_pop(cstack));
+      while (!stack_empty(cstack))
+         printf("-%d", stack_pop(cstack));
       putchar('\n');
+      free_stack(cstack);
    }
 
    DIGRAPHdestroy(G);
