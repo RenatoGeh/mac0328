@@ -35,8 +35,8 @@ int naive_sc(Digraph G) {
 
 int main(int argc, char *args[]) {
    int k, V, a, alg;
-   int i, j;
-   int msc[NUM_EVALD_SC + 1];
+   int i, j, t;
+   double tsc[NUM_EVALD_SC + 1], avg;
    Digraph G;
    int (*algs[2]) (Digraph G) = {naive_sc, DIGRAPHscKS};
 
@@ -47,70 +47,101 @@ int main(int argc, char *args[]) {
    k = atoi(args[2]);
 
    for (i = 0; i < NUM_EVALD_SC + 1; ++i)
-      msc[i] = 0;
+      tsc[i] = 0.0;
 
-   printf("%*cA |  0  |  1  |  2  | med |\n"
-         "-------+-----+-----+-----+-----+\n", 5, ' ');
-   for (i = 0; i < 17;) {
-      int sc[NUM_EVALD_SC];
-      int k, l, last;
-      double avg = 0.0;
+   printf("As proximas k=%d tabelas mostram o numero de vertices nas\n"
+         "tres maiores componentes fortes de cada digrafo aleatorio.\n"
+         "A primeira coluna mostra o numero de arestas em funcao do\n"
+         "numero fixo de V=%d vertices. As tres seguintes colunas\n"
+         "mostram o numero de vertices nas tres maiores componentes\n"
+         "fortes de cada digrafo. A ultima coluna mostra a media de\n"
+         "vertices da linha correspondente. Cada linha da tabela e'\n"
+         "um digrafo aleatorio, com a ultima linha sendo a media das\n"
+         "componentes fortes.\n\n", k, V);
 
-      for (j = 0; j < NUM_EVALD_SC; ++j)
-         sc[j] = -1;
-      if (i == 0)
-         a = V/2;
-      else a = i*V;
+   for (t = 0; t < k; ++t) {
+      int msc[NUM_EVALD_SC + 1];
 
-      G = DIGRAPHrand1(V, a);
+      for (i = 0; i < NUM_EVALD_SC + 1; ++i)
+         msc[i] = 0;
 
-      printf("nsc: %d\n", algs[alg-1](G));
-      for (j = 0; j < G->V; ++j)
-         printf(" %d", G->sc[j]);
-      putchar('\n');
+      printf("=================================\n"
+            "Para o %d-esimo digrafo aleatorio:\n"
+            "=================================\n", t+1);
+      printf("%*cA |  0  |  1  |  2  | med |\n"
+            "-------+-----+-----+-----+-----+\n", 5, ' ');
+      for (i = 0; i < 17;) {
+         int sc[NUM_EVALD_SC];
+         int q, l, last;
+         avg = 0.0;
 
-      last = G->sc[0];
-      for (j = l = k = 0; l < G->V; ++l) {
-         if (G->sc[l] != last) {
-            int c;
-            for (j = 0; j < NUM_EVALD_SC; ++j)
-               if (k > sc[j]) {
-                  for (c = NUM_EVALD_SC-1; c != j; --c)
-                     sc[c] = sc[c + 1];
-                  sc[j] = k;
-                  break;
-               }
-            k = 0;
-            last = G->sc[l];
+         for (j = 0; j < NUM_EVALD_SC; ++j)
+            sc[j] = -1;
+         if (i == 0)
+            a = V/2;
+         else a = i*V;
+
+         G = DIGRAPHrand1(V, a);
+
+         algs[alg-1](G);
+         last = G->sc[0];
+         for (j = l = q = 0; l < G->V; ++l) {
+            if (G->sc[l] != last) {
+               int c;
+               for (j = 0; j < NUM_EVALD_SC; ++j)
+                  if (q > sc[j]) {
+                     for (c = NUM_EVALD_SC-1; c != j; --c)
+                        sc[c] = sc[c + 1];
+                     sc[j] = q;
+                     break;
+                  }
+               q = 0;
+               last = G->sc[l];
+            }
+            ++q;
          }
-         ++k;
-      }
-      if (i == 0) printf("0.5*V  ");
-      else printf("%3d*V  ", i);
-      for (j = 0; j < NUM_EVALD_SC; ++j) {
-         if (sc[j] < 0)
-            printf("|  -  ");
-         else {
-            printf("|%5d", sc[j]);
-            avg += sc[j];
-            msc[j] += sc[j];
+         if (sc[0] < 0) sc[0] = G->V;
+         if (i == 0) printf("0.5*V  ");
+         else printf("%3d*V  ", i);
+         for (j = 0; j < NUM_EVALD_SC; ++j) {
+            if (sc[j] < 0)
+               printf("|  -  ");
+            else {
+               printf("|%5d", sc[j]);
+               avg += sc[j];
+               msc[j] += sc[j];
+            }
          }
+         msc[NUM_EVALD_SC] += avg;
+         avg /= 3;
+         printf("|%5.1f|\n", avg);
+
+         if (i == 0)
+            i = 1;
+         else
+            i <<= 1;
+
+         DIGRAPHdestroy(G);
       }
-      msc[NUM_EVALD_SC] += avg;
-      avg /= 3;
+      printf(" media ");
+      for (i = 0; i < NUM_EVALD_SC; ++i) {
+         avg = msc[i]/6.0;
+         tsc[i] += avg;
+         printf("|%5.1f", avg);
+      }
+      avg = msc[NUM_EVALD_SC]/(6.0*NUM_EVALD_SC);
       printf("|%5.1f|\n", avg);
-
-      if (i == 0)
-         i = 1;
-      else
-         i <<= 1;
-
-      DIGRAPHdestroy(G);
+      tsc[NUM_EVALD_SC] += avg;
+      puts("-------+-----+-----+-----+-----+\n");
    }
-   printf(" media ");
+
+   printf("Media agregada das tres primeiras componentes fortes dos "
+         "%d digrafos aleatorios:\nA  numero de vertices\n", k);
+   puts("-----------------------");
    for (i = 0; i < NUM_EVALD_SC; ++i)
-      printf("|%5d", msc[i]);
-   printf("|%5.1f|\n", msc[NUM_EVALD_SC]/(6.0*NUM_EVALD_SC));
-   printf("-------+-----+-----+-----+-----+\n");
+      printf("%d: %.3f\n", i, tsc[i]/((double) k));
+   puts("-----------------------");
+   printf("Media das medias: %.3f\n", tsc[NUM_EVALD_SC]/((double) k));
+
    return 0;
 }
