@@ -8,9 +8,9 @@
 // Autor:      Renato Lui Geh
 // Numero USP: 8536030
 // Sigla:      RENATOLU
-// Data:       2016-08-29
+// Data:       2016-09-07
 //
-// Este arquivo faz parte da tarefa E
+// Este arquivo faz parte da tarefa F
 // da disciplina MAC0328.
 //
 ////////////////////////////////////////////////////////////// */
@@ -26,6 +26,7 @@
 #define PPP_IS_NULL(G) ((G)->pre == NULL || (G)->pos == NULL ||\
       (G)->pai == NULL)
 #define SCORD_IS_NULL(G) ((G)->sc == NULL || (G)->ord == NULL)
+#define VISIT_IS_NULL(G) ((G)->visit == NULL)
 
 static void init_ppp(Digraph G) {
    G->pre = (int*) malloc(G->V * sizeof(int));
@@ -38,8 +39,28 @@ static void init_scord(Digraph G) {
    G->ord = (int*) malloc(G->V * sizeof(int));
 }
 
+static void init_visit(Digraph G) {
+   G->visit = (int*) malloc(G->V * sizeof(int));
+}
+
+static void free_ppp(Digraph G) {
+   free(G->pre);
+   free(G->pai);
+   free(G->pos);
+}
+
+static void free_scord(Digraph G) {
+   free(G->sc);
+   free(G->ord);
+}
+
+static void free_visit(Digraph G) {
+   free(G->visit);
+}
+
 #define CHECK_PPP(G) if (PPP_IS_NULL(G)) init_ppp(G)
 #define CHECK_SCORD(G) if (SCORD_IS_NULL(G)) init_scord(G)
+#define CHECK_VISIT(G) if (VISIT_IS_NULL(G)) init_visit(G)
 
 static link NEWnode(Vertex w, link next) {
    link a = malloc(sizeof(struct node));
@@ -54,7 +75,9 @@ Digraph DIGRAPHinit(int V) {
    G->V = V;
    G->A = 0;
    G->adj = malloc(V * sizeof(link));
-   G->pre = G->pos = G->pai = G->sc = G->ord = NULL;
+   G->pre = G->pos = G->pai = NULL;
+   G->sc = G->ord = NULL;
+   G->visit = NULL;
    for (v = 0; v < V; v++)
       G->adj[v] = NULL;
    return G;
@@ -73,9 +96,9 @@ void DIGRAPHdestroy(Digraph G) {
       }
    }
    free(G->adj);
-   free(G->pre);
-   free(G->pos);
-   free(G->pai);
+   free_ppp(G);
+   free_scord(G);
+   free_visit(G);
    free(G);
 }
 
@@ -380,4 +403,22 @@ Digraph DIGRAPHreverse(Digraph G) {
          DIGRAPHinsertA(GR, w, v);
       }
    return GR;
+}
+
+static void reachR(Digraph G, Vertex v) {
+   link a;
+   G->visit[v] = 1;
+   for (a = G->adj[v]; a != NULL; a = a->next)
+      if (G->visit[a->w] == 0)
+         reachR(G, a->w);
+}
+
+bool DIGRAPHreach(Digraph G, Vertex s, Vertex t) {
+   Vertex v;
+   CHECK_VISIT(G);
+   for (v = 0; v < G->V; v++)
+      G->visit[v] = 0;
+   reachR(G, s);
+   if (G->visit[t] == 0) return FALSE;
+   else return TRUE;
 }

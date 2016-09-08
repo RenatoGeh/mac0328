@@ -8,9 +8,9 @@
 // Autor:      Renato Lui Geh
 // Numero USP: 8536030
 // Sigla:      RENATOLU
-// Data:       2016-08-29
+// Data:       2016-09-07
 //
-// Este arquivo faz parte da tarefa E
+// Este arquivo faz parte da tarefa F
 // da disciplina MAC0328.
 //
 ////////////////////////////////////////////////////////////// */
@@ -30,7 +30,26 @@
 #define NUM_EVALD_SC 3
 
 int naive_sc(Digraph G) {
-   return 0;
+   int i, j, c;
+
+   if (G->sc == NULL)
+      G->sc = (int*) malloc(G->V * sizeof(int));
+
+   for (i = 0; i < G->V; ++i)
+      G->sc[i] = -1;
+
+   c = 0;
+   for (i = 0; i < G->V; ++i)
+      if (G->sc[i] < 0) {
+         G->sc[i] = c;
+         for (j = i+1; j < G->V; ++j)
+            if (G->sc[i] < 0 || G->sc[j] < 0)
+               if (DIGRAPHreach(G, i, j) && DIGRAPHreach(G, j, i))
+                  G->sc[j] = c;
+         ++c;
+      }
+
+   return c;
 }
 
 int main(int argc, char *args[]) {
@@ -65,11 +84,11 @@ int main(int argc, char *args[]) {
       for (i = 0; i < NUM_EVALD_SC + 1; ++i)
          msc[i] = 0;
 
-      printf("=================================\n"
-            "Para o %d-esimo digrafo aleatorio:\n"
-            "=================================\n", t+1);
-      printf("%*cA |  0  |  1  |  2  | med |\n"
-            "-------+-----+-----+-----+-----+\n", 5, ' ');
+      printf("====================================\n"
+            "  Para o %d-esimo digrafo aleatorio:\n"
+            "====================================\n", t+1);
+      printf("%*cA |   0  |   1  |   2  |  med |\n"
+            "-------+------+------+------+------+\n", 5, ' ');
       for (i = 0; i < 17;) {
          int sc[NUM_EVALD_SC];
          int q, l, last;
@@ -105,16 +124,16 @@ int main(int argc, char *args[]) {
          else printf("%3d*V  ", i);
          for (j = 0; j < NUM_EVALD_SC; ++j) {
             if (sc[j] < 0)
-               printf("|  -  ");
+               printf("|   -  ");
             else {
-               printf("|%5d", sc[j]);
+               printf("|%6d", sc[j]);
                avg += sc[j];
                msc[j] += sc[j];
             }
          }
          msc[NUM_EVALD_SC] += avg;
          avg /= 3;
-         printf("|%5.1f|\n", avg);
+         printf("|%6.1f|\n", avg);
 
          if (i == 0)
             i = 1;
@@ -127,12 +146,12 @@ int main(int argc, char *args[]) {
       for (i = 0; i < NUM_EVALD_SC; ++i) {
          avg = msc[i]/6.0;
          tsc[i] += avg;
-         printf("|%5.1f", avg);
+         printf("|%6.1f", avg);
       }
       avg = msc[NUM_EVALD_SC]/(6.0*NUM_EVALD_SC);
-      printf("|%5.1f|\n", avg);
+      printf("|%6.1f|\n", avg);
       tsc[NUM_EVALD_SC] += avg;
-      puts("-------+-----+-----+-----+-----+\n");
+      puts("-------+------+------+------+------+\n");
    }
 
    printf("Media agregada das tres primeiras componentes fortes dos "

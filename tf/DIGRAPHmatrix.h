@@ -51,6 +51,7 @@ struct digraph {
    int *pai;
    int *ord;
    int *sc;
+   int *visit;
 };
 
 /* Um Digraph é um ponteiro para um digraph, ou seja, um Digraph contém
@@ -154,6 +155,10 @@ Digraph DIGRAPHreverse(Digraph G);
  * componentes fortes de G. (O código é adaptado do Programa 19.10 de
  * Sedgewick.) */
 int DIGRAPHscKS(Digraph G);
+
+/* A função DIGRAPHreach() recebe vértices s e t de um digrafo G e
+ * decide se t está ao alcance de s ou não. */
+bool DIGRAPHreach(Digraph G, Vertex s, Vertex t);
 
 #ifdef TEST
 /* REPRESENTAÇÃO POR MATRIZ DE ADJACÊNCIAS: A função

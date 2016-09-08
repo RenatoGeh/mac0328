@@ -8,9 +8,9 @@
 // Autor:      Renato Lui Geh
 // Numero USP: 8536030
 // Sigla:      RENATOLU
-// Data:       2016-08-29
+// Data:       2016-09-07
 //
-// Este arquivo faz parte da tarefa E
+// Este arquivo faz parte da tarefa F
 // da disciplina MAC0328.
 //
 ////////////////////////////////////////////////////////////// */
@@ -61,6 +61,7 @@ struct digraph {
    int *pai;
    int *sc;
    int *ord;
+   int *visit;
 };
 
 /* Um Digraph é um ponteiro para um digraph. */
@@ -163,6 +164,10 @@ int DIGRAPHscKS(Digraph G);
 
 /* Constrói o inverso do digrafo G. */
 Digraph DIGRAPHreverse(Digraph G);
+
+/* A função DIGRAPHreach() recebe vértices s e t de um digrafo G e
+ * decide se t está ao alcance de s ou não. */
+bool DIGRAPHreach(Digraph G, Vertex s, Vertex t);
 
 #ifdef TEST
 /* REPRESENTAÇÃO POR LISTAS DE ADJACÊNCIA: A função DIGRAPHlists_test()
