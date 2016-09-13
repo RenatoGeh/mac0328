@@ -42,7 +42,7 @@ debug: CFLAGS += -g -D DEBUG=1
 debug: ep
 
 simple:
-	gcc compsfortes.c DIGRAPHlists.c $(LIBS)
+	gcc compsfortes.c DIGRAPHlists.c $(CFLAGS) $(LIBS)
 
 ep: compsfortes.o $(DEPS)
 	gcc $^ -o $@ $(LIBS)

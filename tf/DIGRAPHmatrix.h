@@ -21,22 +21,10 @@
 #ifndef DIGRAPH_MATRIX_H_
 #define DIGRAPH_MATRIX_H_
 
-#ifndef Vertex
 #define Vertex int
-#endif
-
-#ifndef TRUE
 #define TRUE 1
-#endif
-
-#ifndef FALSE
 #define FALSE 0
-#endif
-
-#ifndef BOOLEAN_TYPE
-#define BOOLEAN_TYPE
 typedef int bool;
-#endif
 
 /* REPRESENTAÇÃO POR MATRIZ DE ADJACÊNCIAS: A estrutura digraph
  * representa um digrafo. O campo adj é um ponteiro para a matriz de

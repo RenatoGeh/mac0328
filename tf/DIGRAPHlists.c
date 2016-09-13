@@ -289,9 +289,10 @@ static bool cycleR(Digraph G, Vertex v) {
    for (a = G->adj[v]; a != NULL; a = a->next) {
       Vertex w = a->w;
       if (G->pre[w] == -1) {
+         int r;
          G->pai[a->w] = v;
-         if (cycleR(G, w) >= 0)
-            return w;
+         if ((r = cycleR(G, w)) >= 0)
+            return r;
       } else if (G->pos[w] == -1)
          return w; /* v-w é de retorno */
    }
@@ -329,15 +330,14 @@ Vertex DIGRAPHcycleOrTopo(Digraph G) {
 #define BUFFER_SIZE 22
 Digraph DIGRAPHinputArcs() {
    Digraph G;
-   int V;
-   char buffer[BUFFER_SIZE];
+   int V, a;
 
-   scanf("%d", &V);
+   scanf("%d ", &V);
+   scanf("%d ", &a);
    G = DIGRAPHinit(V);
-   while (fgets(buffer, BUFFER_SIZE, stdin) != NULL) {
+   while (a--) {
       int u, v;
-      if (buffer[0] == '\n') break;
-      sscanf(buffer, "%d %d", &u, &v);
+      scanf("%d %d ", &u, &v);
       DIGRAPHinsertA(G, u, v);
    }
 

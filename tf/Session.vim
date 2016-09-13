@@ -7,16 +7,16 @@ if expand('%') == '' && !&modified && line('$') <= 1 && getline(1) == ''
   let s:wipebuf = bufnr('%')
 endif
 set shortmess=aoO
-badd +159 DIGRAPHmatrix.h
+badd +4 DIGRAPHmatrix.h
 badd +197 DIGRAPHmatrix.c
-badd +97 DIGRAPHlists.h
+badd +15 DIGRAPHlists.h
 badd +1 DIGRAPHlists.c
 badd +1 ~/Documents/EPs/mac0328/guidelines
-badd +46 Makefile
+badd +45 Makefile
 badd +56 DIGRAPHlists_test.c
 badd +19 DIGRAPHmatrix_test.c
-badd +1 README.txt
-badd +58 compsfortes.c
+badd +1 relatorio.txt
+badd +160 compsfortes.c
 argglobal
 silent! argdel *
 argadd DIGRAPHmatrix.h
@@ -44,11 +44,11 @@ setlocal fml=1
 setlocal fdn=20
 setlocal fen
 silent! normal! zE
-let s:l = 178 - ((57 * winheight(0) + 29) / 58)
+let s:l = 37 - ((36 * winheight(0) + 29) / 58)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-178
+37
 normal! 0
 wincmd w
 argglobal
@@ -62,12 +62,12 @@ setlocal fml=1
 setlocal fdn=20
 setlocal fen
 silent! normal! zE
-let s:l = 419 - ((52 * winheight(0) + 29) / 58)
+let s:l = 334 - ((21 * winheight(0) + 29) / 58)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-419
-normal! 010|
+334
+normal! 0
 wincmd w
 exe 'vert 1resize ' . ((&columns * 117 + 119) / 239)
 exe 'vert 2resize ' . ((&columns * 121 + 119) / 239)
@@ -93,11 +93,11 @@ setlocal fml=1
 setlocal fdn=20
 setlocal fen
 silent! normal! zE
-let s:l = 158 - ((50 * winheight(0) + 29) / 58)
+let s:l = 4 - ((3 * winheight(0) + 29) / 58)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-158
+4
 normal! 0
 wincmd w
 argglobal
@@ -111,11 +111,11 @@ setlocal fml=1
 setlocal fdn=20
 setlocal fen
 silent! normal! zE
-let s:l = 392 - ((57 * winheight(0) + 29) / 58)
+let s:l = 304 - ((15 * winheight(0) + 29) / 58)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-392
+304
 normal! 0
 wincmd w
 exe 'vert 1resize ' . ((&columns * 120 + 119) / 239)
@@ -147,11 +147,11 @@ setlocal fml=1
 setlocal fdn=20
 setlocal fen
 silent! normal! zE
-let s:l = 13 - ((12 * winheight(0) + 29) / 58)
+let s:l = 1 - ((0 * winheight(0) + 29) / 58)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-13
+1
 normal! 0
 wincmd w
 argglobal
@@ -165,11 +165,11 @@ setlocal fml=1
 setlocal fdn=20
 setlocal fen
 silent! normal! zE
-let s:l = 15 - ((14 * winheight(0) + 29) / 58)
+let s:l = 1 - ((0 * winheight(0) + 29) / 58)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-15
+1
 normal! 0
 wincmd w
 argglobal
@@ -183,13 +183,14 @@ setlocal fml=1
 setlocal fdn=20
 setlocal fen
 silent! normal! zE
-let s:l = 15 - ((14 * winheight(0) + 29) / 58)
+let s:l = 166 - ((57 * winheight(0) + 29) / 58)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-15
+166
 normal! 0
 wincmd w
+3wincmd w
 exe 'vert 1resize ' . ((&columns * 79 + 119) / 239)
 exe 'vert 2resize ' . ((&columns * 79 + 119) / 239)
 exe 'vert 3resize ' . ((&columns * 79 + 119) / 239)
@@ -216,15 +217,15 @@ setlocal fml=1
 setlocal fdn=20
 setlocal fen
 silent! normal! zE
-let s:l = 46 - ((37 * winheight(0) + 29) / 58)
+let s:l = 45 - ((36 * winheight(0) + 29) / 58)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-46
-normal! 0
+45
+normal! 046|
 wincmd w
 argglobal
-edit README.txt
+edit relatorio.txt
 setlocal fdm=manual
 setlocal fde=0
 setlocal fmr={{{,}}}
@@ -241,10 +242,9 @@ normal! zt
 18
 normal! 018|
 wincmd w
-2wincmd w
 exe 'vert 1resize ' . ((&columns * 120 + 119) / 239)
 exe 'vert 2resize ' . ((&columns * 118 + 119) / 239)
-tabnext 4
+tabnext 3
 if exists('s:wipebuf') && getbufvar(s:wipebuf, '&buftype') isnot# 'terminal'
   silent exe 'bwipe ' . s:wipebuf
 endif

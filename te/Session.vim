@@ -1,5 +1,4 @@
 let SessionLoad = 1
-if &cp | set nocp | endif
 let s:so_save = &so | let s:siso_save = &siso | set so=0 siso=0
 let v:this_session=expand("<sfile>:p")
 silent only
@@ -24,7 +23,7 @@ badd +56 DIGRAPHlists_test.c
 badd +19 DIGRAPHmatrix_test.c
 badd +100 rastro.c
 badd +1 README.txt
-badd +1 ciclooutopo.c
+badd +85 ciclooutopo.c
 argglobal
 silent! argdel *
 argadd DIGRAPHmatrix.h
@@ -39,8 +38,8 @@ set nosplitbelow
 set nosplitright
 wincmd t
 set winheight=1 winwidth=1
-exe 'vert 1resize ' . ((&columns * 117 + 119) / 238)
-exe 'vert 2resize ' . ((&columns * 120 + 119) / 238)
+exe 'vert 1resize ' . ((&columns * 117 + 119) / 239)
+exe 'vert 2resize ' . ((&columns * 121 + 119) / 239)
 argglobal
 edit DIGRAPHlists.h
 setlocal fdm=manual
@@ -52,7 +51,7 @@ setlocal fml=1
 setlocal fdn=20
 setlocal fen
 silent! normal! zE
-let s:l = 13 - ((12 * winheight(0) + 33) / 66)
+let s:l = 13 - ((11 * winheight(0) + 29) / 58)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
@@ -70,15 +69,15 @@ setlocal fml=1
 setlocal fdn=20
 setlocal fen
 silent! normal! zE
-let s:l = 246 - ((65 * winheight(0) + 33) / 66)
+let s:l = 246 - ((57 * winheight(0) + 29) / 58)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
 246
 normal! 0
 wincmd w
-exe 'vert 1resize ' . ((&columns * 117 + 119) / 238)
-exe 'vert 2resize ' . ((&columns * 120 + 119) / 238)
+exe 'vert 1resize ' . ((&columns * 117 + 119) / 239)
+exe 'vert 2resize ' . ((&columns * 121 + 119) / 239)
 tabedit DIGRAPHmatrix.h
 set splitbelow splitright
 wincmd _ | wincmd |
@@ -89,10 +88,9 @@ set nosplitbelow
 set nosplitright
 wincmd t
 set winheight=1 winwidth=1
-exe 'vert 1resize ' . ((&columns * 119 + 119) / 238)
-exe 'vert 2resize ' . ((&columns * 118 + 119) / 238)
+exe 'vert 1resize ' . ((&columns * 120 + 119) / 239)
+exe 'vert 2resize ' . ((&columns * 118 + 119) / 239)
 argglobal
-edit DIGRAPHmatrix.h
 setlocal fdm=manual
 setlocal fde=0
 setlocal fmr={{{,}}}
@@ -102,7 +100,7 @@ setlocal fml=1
 setlocal fdn=20
 setlocal fen
 silent! normal! zE
-let s:l = 1 - ((0 * winheight(0) + 33) / 66)
+let s:l = 1 - ((0 * winheight(0) + 29) / 58)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
@@ -120,15 +118,16 @@ setlocal fml=1
 setlocal fdn=20
 setlocal fen
 silent! normal! zE
-let s:l = 3 - ((2 * winheight(0) + 33) / 66)
+let s:l = 235 - ((0 * winheight(0) + 29) / 58)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-3
+235
 normal! 0
 wincmd w
-exe 'vert 1resize ' . ((&columns * 119 + 119) / 238)
-exe 'vert 2resize ' . ((&columns * 118 + 119) / 238)
+2wincmd w
+exe 'vert 1resize ' . ((&columns * 120 + 119) / 239)
+exe 'vert 2resize ' . ((&columns * 118 + 119) / 239)
 tabedit ciclooutopo.c
 set splitbelow splitright
 wincmd _ | wincmd |
@@ -139,8 +138,8 @@ set nosplitbelow
 set nosplitright
 wincmd t
 set winheight=1 winwidth=1
-exe 'vert 1resize ' . ((&columns * 119 + 119) / 238)
-exe 'vert 2resize ' . ((&columns * 118 + 119) / 238)
+exe 'vert 1resize ' . ((&columns * 120 + 119) / 239)
+exe 'vert 2resize ' . ((&columns * 118 + 119) / 239)
 argglobal
 edit ciclooutopo.c
 setlocal fdm=manual
@@ -152,12 +151,12 @@ setlocal fml=1
 setlocal fdn=20
 setlocal fen
 silent! normal! zE
-let s:l = 1 - ((0 * winheight(0) + 33) / 66)
+let s:l = 121 - ((57 * winheight(0) + 29) / 58)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-1
-normal! 0
+121
+normal! 010|
 wincmd w
 argglobal
 edit Makefile
@@ -170,15 +169,15 @@ setlocal fml=1
 setlocal fdn=20
 setlocal fen
 silent! normal! zE
-let s:l = 11 - ((10 * winheight(0) + 33) / 66)
+let s:l = 11 - ((9 * winheight(0) + 29) / 58)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
 11
 normal! 018|
 wincmd w
-exe 'vert 1resize ' . ((&columns * 119 + 119) / 238)
-exe 'vert 2resize ' . ((&columns * 118 + 119) / 238)
+exe 'vert 1resize ' . ((&columns * 120 + 119) / 239)
+exe 'vert 2resize ' . ((&columns * 118 + 119) / 239)
 tabedit Makefile
 set splitbelow splitright
 wincmd _ | wincmd |
@@ -189,8 +188,8 @@ set nosplitbelow
 set nosplitright
 wincmd t
 set winheight=1 winwidth=1
-exe 'vert 1resize ' . ((&columns * 119 + 119) / 238)
-exe 'vert 2resize ' . ((&columns * 118 + 119) / 238)
+exe 'vert 1resize ' . ((&columns * 120 + 119) / 239)
+exe 'vert 2resize ' . ((&columns * 118 + 119) / 239)
 argglobal
 edit Makefile
 setlocal fdm=manual
@@ -202,7 +201,7 @@ setlocal fml=1
 setlocal fdn=20
 setlocal fen
 silent! normal! zE
-let s:l = 64 - ((63 * winheight(0) + 33) / 66)
+let s:l = 64 - ((55 * winheight(0) + 29) / 58)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
@@ -220,17 +219,17 @@ setlocal fml=1
 setlocal fdn=20
 setlocal fen
 silent! normal! zE
-let s:l = 1 - ((0 * winheight(0) + 33) / 66)
+let s:l = 1 - ((0 * winheight(0) + 29) / 58)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
 1
 normal! 0
 wincmd w
-exe 'vert 1resize ' . ((&columns * 119 + 119) / 238)
-exe 'vert 2resize ' . ((&columns * 118 + 119) / 238)
-tabnext 4
-if exists('s:wipebuf')
+exe 'vert 1resize ' . ((&columns * 120 + 119) / 239)
+exe 'vert 2resize ' . ((&columns * 118 + 119) / 239)
+tabnext 2
+if exists('s:wipebuf') && getbufvar(s:wipebuf, '&buftype') isnot# 'terminal'
   silent exe 'bwipe ' . s:wipebuf
 endif
 unlet! s:wipebuf

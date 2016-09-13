@@ -1,0 +1,183 @@
+/* DECLARO QUE SOU O UNICO AUTOR E RESPONSAVEL POR ESTE PROGRAMA.
+// TODAS AS PARTES DO PROGRAMA, EXCETO AS QUE FORAM FORNECIDAS
+// PELO PROFESSOR OU COPIADAS DO LIVRO OU DAS BIBLIOTECAS DE
+// SEDGEWICK OU ROBERTS, FORAM DESENVOLVIDAS POR MIM.  DECLARO
+// TAMBEM QUE SOU RESPONSAVEL POR TODAS AS COPIAS DESTE PROGRAMA
+// E QUE NAO DISTRIBUI NEM FACILITEI A DISTRIBUICAO DE COPIAS.
+//
+// Autor:      Renato Lui Geh
+// Numero USP: 8536030
+// Sigla:      RENATOLU
+// Data:       2016-09-07
+//
+// Este arquivo faz parte da tarefa F
+// da disciplina MAC0328.
+//
+////////////////////////////////////////////////////////////// */
+
+Relatorio Tarefa F
+
+1. Introdução
+
+Neste relatório iremos analisar os experimentos feitos na Tarefa F.
+Não iremos mostrar os dados neste arquivo. Para ler os dados crus e
+como foram extraídos, leia o arquivo dados.txt. Vamos referenciar os
+dados intimamente. Portanto consideraremos que o leitor já tenha lido
+o arquivo dados.txt.
+
+Primeiro vamos analisar como o tamanho das três maiores componentes
+fortes se relaciona com o tamanho do digrafo, ou seja, veremos como
+que estes tamanhos evoluem em função do número de arestas com número de
+vértices fixos. Depois vamos analisar as componentes fortes quando
+aumentamos o número de vértices. Finalmente vamos comparar o tempo de
+execução do Kosaraju-Sharir e do algoritmo simplório.
+
+2. Análise das componentes fortes em função do tamanho do digrafo
+
+Considere as seguintes tabelas:
+
+====================================
+  Para o 1-esimo digrafo aleatorio:
+====================================
+     A |   0  |   1  |   2  |  med |
+-------+------+------+------+------+
+0.5*V  |     1|     1|     1|   1.0|
+  1*V  |     1|     1|     1|   1.0|
+  2*V  |    13|    10|     7|  10.0|
+  4*V  |    41|     1|     0|  14.0|
+  8*V  |   100|   -  |   -  |  33.3|
+ 16*V  |   100|   -  |   -  |  33.3|
+ media |  42.7|   2.2|   1.5|  15.4|
+-------+------+------+------+------+
+Tabela 2.1: V=100
+
+A tabela acima mostra os tamanhos (em vértices) das três maiores
+componentes fortes do digrafo aleatório. Note como quanto maior o
+número de arestas, maiores as componentes fortes. Não só isso, mas
+quando aumentamos muito o número de arestas, acabamos com apenas uma
+componente forte que engloba todo o digrafo. Além disso, note como
+as componentes tendem a se concentrar na maior, ao invés de serem
+uniformemente distribuídas.
+
+3. Análise das componentes fortes com número de vértices grande
+
+====================================
+  Para o 1-esimo digrafo aleatorio:
+====================================
+     A |   0  |   1  |   2  |  med |
+-------+------+------+------+------+
+0.5*V  |     1|     1|     1|   1.0|
+  1*V  |     2|     2|     2|   2.0|
+  2*V  |     9|     9|     7|   8.3|
+  4*V  |   129|    58|    31|  72.7|
+  8*V  |  1000|   -  |   -  | 333.3|
+ 16*V  |  1000|   -  |   -  | 333.3|
+ media | 356.8|  11.7|   6.8| 125.1|
+-------+------+------+------+------+
+Tabela 3.1: V=1000
+
+====================================
+  Para o 1-esimo digrafo aleatorio:
+====================================
+     A |   0  |   1  |   2  |  med |
+-------+------+------+------+------+
+0.5*V  |     1|     1|     1|   1.0|
+  1*V  |     1|     1|     1|   1.0|
+  2*V  |    17|    17|    11|  15.0|
+  4*V  |   112|   103|   100| 105.0|
+  8*V  |   330|     1|     0| 110.3|
+ 16*V  |  5000|   -  |   -  |1666.7|
+ media | 910.2|  20.5|  18.8| 316.5|
+-------+------+------+------+------+
+Tabela 3.2: V=5000
+
+====================================
+  Para o 1-esimo digrafo aleatorio:
+====================================
+     A |   0  |   1  |   2  |  med |
+-------+------+------+------+------+
+0.5*V  |     1|     1|     1|   1.0|
+  1*V  |     1|     1|     1|   1.0|
+  2*V  |    18|    10|     9|  12.3|
+  4*V  |   162|   150|   122| 144.7|
+  8*V  |  5737|  1454|     1|2397.3|
+ 16*V  | 10000|   -  |   -  |3333.3|
+ media |2653.2| 269.3|  22.3| 981.6|
+-------+------+------+------+------+
+Tabela 3.3: V=10000
+
+Fixe uma linha e compare com a mesma linha das outras tabelas. Note
+como elas se comportam de maneira similar. Mesmo com um número de
+vértices com dois graus de grandeza maior, elas se comportam de forma
+parecidas. Com um número baixo de arestas, temos um alto número de
+componentes fortes que possuem poucos vértices. Ao aumentarmos o número
+de arestas, a grandeza das componentes fortes aumenta
+proporcionalmente. Eventualmente, quanto mais próximo de V*(V-1),
+teremos uma só componente forte que contém todos os vértices. Mesmo com
+A=16*V podemos evidenciar isto. Além disso, a tendência das componentes
+fortes se agregarem na maior fica ainda mais evidente quanto maior o
+número de vértices.
+
+4. Análise do tempo do Kosaraju-Sharir vs algoritmo simplório
+
+O algoritmo de Kosaraju-Sharir tem tempo de execução linear O(V+A),
+enquanto que o algoritmo simplório implementado em compsfortes.c tem
+tempo O(V^2 (V+A)). A diferença entre os dois algoritmos fica claro
+com os experimentos:
+
+V=100:
+   Kosaraju-Sharir
+   | real   0m0.003s
+   | user   0m0.000s
+   | sys    0m0.000s
+   Algoritmo Simplório
+   | real   0m0.016s
+   | user   0m0.013s
+   | sys    0m0.000s
+
+V=500:
+   Kosaraju-Sharir
+   | real   0m0.005s
+   | user   0m0.003s
+   | sys    0m0.000s
+   Algoritmo Simplório
+   | real   0m0.579s
+   | user   0m0.573s
+   | sys    0m0.000s
+
+V=1000:
+   Kosaraju-Sharir
+   | real   0m0.012s
+   | user   0m0.007s
+   | sys    0m0.003s
+   Algoritmo Simplório
+   | real   0m4.436s
+   | user   0m4.427s
+   | sys    0m0.000s
+
+V=5000:
+   Kosaraju-Sharir
+   | real   0m0.090s
+   | user   0m0.080s
+   | sys    0m0.007s
+   Algoritmo Simplório
+   | real   9m2.849s
+   | user   9m2.850s
+   | sys    0m0.003s
+
+V=10000:
+   Kosaraju-Sharir
+   | real   0m0.210s
+   | user   0m0.200s
+   | sys    0m0.007s
+   Algoritmo Simplório
+   | real   73m17.676s
+   | user   73m17.953s
+   | sys    0m0.003s
+
+Note a diferença de tempos, com V=10000 chegando a mais 73 minutos de
+tempo de execução no algoritmo cúbico, com o Kosaraju-Sharir em 0.210
+segundos. Mesmo quando o número de vértices é pequeno, a diferença já
+é grande. É óbvia a rapidez do Kosaraju-Sharir quando comparado ao
+algoritmo simplório.
+

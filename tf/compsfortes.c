@@ -29,6 +29,10 @@
 
 #define NUM_EVALD_SC 3
 
+/* Toma um digrafo G e retorna quantas componentes fortes estão
+ * presentes em G. Guarda em G->sc as componentes fortes com rótulos
+ * {0,1,2,...}, onde cada rótulo indica que o vértice de índice i está
+ * na (G->sc[i])-ésima componente forte. */
 int naive_sc(Digraph G) {
    int i, j, c;
 
@@ -76,7 +80,9 @@ int main(int argc, char *args[]) {
          "fortes de cada digrafo. A ultima coluna mostra a media de\n"
          "vertices da linha correspondente. Cada linha da tabela e'\n"
          "um digrafo aleatorio, com a ultima linha sendo a media das\n"
-         "componentes fortes.\n\n", k, V);
+         "componentes fortes. ", k, V);
+   printf("Algoritmo a ser utilizado:\n%s.\n\n",
+         (alg == 1) ? "naive/simplorio" : "Kosaraju-Sharir");
 
    for (t = 0; t < k; ++t) {
       int msc[NUM_EVALD_SC + 1];
@@ -154,8 +160,8 @@ int main(int argc, char *args[]) {
       puts("-------+------+------+------+------+\n");
    }
 
-   printf("Media agregada das tres primeiras componentes fortes dos "
-         "%d digrafos aleatorios:\nA  numero de vertices\n", k);
+   printf("Media agregada das tres primeiras componentes fortes dos\n"
+         "%d digrafos aleatorios:\n\nC: numero de vertices\n", k);
    puts("-----------------------");
    for (i = 0; i < NUM_EVALD_SC; ++i)
       printf("%d: %.3f\n", i, tsc[i]/((double) k));
