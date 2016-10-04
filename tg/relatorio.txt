@@ -1,0 +1,167 @@
+/* DECLARO QUE SOU O UNICO AUTOR E RESPONSAVEL POR ESTE PROGRAMA.
+// TODAS AS PARTES DO PROGRAMA, EXCETO AS QUE FORAM FORNECIDAS
+// PELO PROFESSOR OU COPIADAS DO LIVRO OU DAS BIBLIOTECAS DE
+// SEDGEWICK OU ROBERTS, FORAM DESENVOLVIDAS POR MIM.  DECLARO
+// TAMBEM QUE SOU RESPONSAVEL POR TODAS AS COPIAS DESTE PROGRAMA
+// E QUE NAO DISTRIBUI NEM FACILITEI A DISTRIBUICAO DE COPIAS.
+//
+// Autor:      Renato Lui Geh
+// Numero USP: 8536030
+// Sigla:      RENATOLU
+// Data:       2016-10-04
+//
+// Este arquivo faz parte da tarefa G
+// da disciplina MAC0328.
+//
+////////////////////////////////////////////////////////////// */
+
+Relatório da Tarefa G
+=====================
+
+Primeiro vamos fixar V e d, alterando o valor de k. Considere as
+seguintes execuções:
+
+   > 1000 0.1 1
+   distancia media: 2.88
+
+   > 1000 0.1 2
+   distancia media: 2.69
+
+   > 1000 0.1 5
+   distancia media: 2.43
+
+   > 1000 0.1 10
+   distancia media: 2.15
+
+   > 1000 0.1 100
+   distancia media: 1.79
+
+   > 1000 0.1 500
+   distancia media: 1.36
+
+   > 1000 0.1 900
+   distancia media: 1.16
+
+Note como quanto maior o k, menor a distancia. Isto acontece pois
+aumentaremos o número de arestas extras, o que torna o grafo mais denso
+e portanto a distância diminuirá. Como a função apenas tenta colocar
+arestas se já não existir uma mesma com mesmos vértices, a chamada:
+
+   > 1000 0.1 1000
+
+Não é garantia de tornar a distância média 1.0, já que é muito mais
+provável, quanto maior o k, que tentemos criar arestas já existentes.
+
+Agora vamos fixar V e k, alterando d:
+
+   > 1000 0.1 4
+   distancia media: 2.50
+
+   > 1000 0.2 4
+   distancia media: 2.01
+
+   > 1000 0.3 4
+   distancia media: 1.80
+
+   > 1000 0.5 4
+   distancia media: 1.52
+
+   > 1000 0.9 4
+   distancia media: 1.07
+
+   > 1000 1.0 4
+   distancia media: 1.03
+
+   > 1000 1.5 4
+   distancia media: 1.00
+
+O parâmetro d faz a distância média crescer muito mais. Vamos agora
+testar para d bem pequeno:
+
+   > 1000 0.001 4
+   distancia media: 3.57
+
+   > 1000 0.005 4
+   distancia media: 3.56
+
+   > 1000 0.01 4
+   distancia media: 3.52
+
+   > 1000 0.01 10
+   distancia media: 2.64
+
+   > 1000 0.001 10
+   distancia media: 2.65
+
+   > 1000 0.005 10
+   distancia media: 2.64
+
+Note como as k arestas adicionais fazem diferença quando d é pequeno.
+
+Note como mudando o número V de vértices não faz tanta diferença quando
+V é relativamente grande (V pequeno é bem volátil):
+
+   > 10 0.1 2
+   distancia media: 2.11
+
+   > 50 0.1 2
+   distancia media: 2.66
+
+   > 100 0.1 2
+   distancia media: 2.71
+
+   > 1000 0.1 2
+   distancia media: 2.69
+
+   > 10000 0.1 2
+   distancia media: 2.88
+
+Deu para perceber que a distância média fica, em média, entre 2 e 3.
+
+Curiosidades
+============
+
+Pesquisei em artigos sobre esses limites que a média pode ter e
+descobri que a média das distâncias tem a seguinte forma:
+
+   1 <= media <= (n+1)/3, n = |V|
+
+Para grafos conexos. Dois outros resultados interessantes é quando
+removemos uma aresta ou um vértice.
+
+Seja m_1 a média das distâncias antes da remoção, e m_2 a média das
+distâncias após a remoção.
+
+Seja ê uma aresta a ser removida, e categorize ê como uma melhor
+escolha se a remoção de ê minimiza a diferença |m_1-m_2|, e como a
+pior escolha se maximiza |m_1-m_2|. Podemos apenas remover arestas que
+sejam parte de um ciclo, já que senão poderíamos tornar o grafo
+desconexo. Portanto, consideremos apenas arestas que são partes de
+ciclos.
+
+Para o melhor caso, temos que a diferença m_2-m_1, se retirarmos a
+melhor aresta, será pelo menos 1/bin(n, 2), onde bin é o binômio de
+Newton, ou seja:
+
+   bin(n, k) = n! / (k! *  (n-k)!)
+
+Agora para o caso em que retiramos a pior aresta:
+
+Teorema 1. (Favaron, Kouider, Maheo)
+   m_2-m_1 <= 1/3 * (sqrt(2) - 1)*n + k, k constante
+
+Para o caso de vértices não consegui entender direito. Usa-se o índice
+de Wiener (que não sei o que é) para achar os limites. Para ler mais
+sobre, veja a subseção 5.4 do artigo [1].
+
+Referências e Leituras Interessantes
+====================================
+
+[1] Distance in Graphs - Goddard, Oellermann - (Seção 5 em especial)
+https://people.cs.clemson.edu/~goddard/papers/distanceChapter.pdf
+
+[2] Mean Distance in a Graph - Doyle, Graver
+http://www.sciencedirect.com/science/article/pii/0012365X77901443
+
+[3] Distance in Graphs - Entringer et al
+http://dml.cz/dmlcz/101401
