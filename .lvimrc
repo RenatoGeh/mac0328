@@ -26,5 +26,8 @@ function! PFPreWrite()
   call winrestview(_curw)
 endfunction
 
+" Breakline at 71
+set textwidth=71
+
 autocmd BufWritePre * :call PFPreWrite()
 let g:localvimrc_sourced_once_for_file = 1
