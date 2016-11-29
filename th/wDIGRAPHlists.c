@@ -820,7 +820,10 @@ static int cdR(Digraph G, Vertex s, Vertex v, double c, double *dist) {
    G->pai[v] = pre_count++;
    if (dist[s] + c < dist[v]) return FALSE;
    for (a = G->adj[v]; a != NULL; a = a->next)
-      if (!cdR(G, v, a->w, a->cst, dist))
+      if (G->pai[a->w] != -1) {
+         if (dist[v] + c < dist[a->w])
+            return FALSE;
+      } else if (!cdR(G, v, a->w, a->cst, dist))
          return FALSE;
    return TRUE;
 }
@@ -836,8 +839,9 @@ int DIGRAPHcheckDist(Digraph G, Vertex s, double *dist) {
       if (!cdR(G, s, a->w, a->cst, dist))
          return FALSE;
    for (v = 0; v < G->V; ++v)
-      if (G->pai[v] < 0 && dist[v] < INFINITE)
+      if (v != s && G->pai[v] < 0 && dist[v] < INFINITE) {
          return FALSE;
+      }
    return TRUE;
 }
 
