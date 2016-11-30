@@ -230,9 +230,8 @@ void DIGRAPHsptD1(Digraph G, Vertex s);
  * Calcula uma SPT com raiz s. A SPT é armazenada no vetor pai[]. As
  * distâncias a partir de s são armazenadas no vetor dist[]. (Se um
  * vértice v não está ao alcance de s, pai[v] vale -1.) Esta função
- * implementa o algoritmo de Dijkstra. Ela supõe que G é representado
- * por listas de adjacência e tem no máximo 1000 vértices.  (O código
- * foi inspirado nos Programas 20.4, e 21.1 de Sedgewick.) */
+ * implementa o algoritmo de Dijkstra. (O código foi inspirado nos
+ * Programas 20.4, e 21.1 de Sedgewick.) */
 void DIGRAPHsptD2(Digraph G, Vertex s);
 
 /* Recebe um digrafo G com custos nos arcos e um vetor de supostas

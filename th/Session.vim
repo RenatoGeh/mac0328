@@ -9,11 +9,10 @@ endif
 set shortmess=aoO
 badd +251 wDIGRAPHlists.h
 badd +1 wDIGRAPHlists.c
-badd +1 DIGRAPHlists.c
 badd +58 PQ.c
 badd +24 PQ.h
 badd +104 distancia.c
-badd +0 relatorio.txt
+badd +21 relatorio.txt
 argglobal
 silent! argdel *
 argadd wDIGRAPHlists.h
@@ -35,12 +34,12 @@ setlocal fml=1
 setlocal fdn=20
 setlocal fen
 silent! normal! zE
-let s:l = 283 - ((42 * winheight(0) + 29) / 58)
+let s:l = 18 - ((17 * winheight(0) + 29) / 58)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-283
-normal! 042|
+18
+normal! 068|
 tabedit wDIGRAPHlists.h
 set splitbelow splitright
 set nosplitbelow
@@ -57,12 +56,12 @@ setlocal fml=1
 setlocal fdn=20
 setlocal fen
 silent! normal! zE
-let s:l = 212 - ((19 * winheight(0) + 29) / 58)
+let s:l = 218 - ((0 * winheight(0) + 29) / 58)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-212
-normal! 040|
+218
+normal! 0
 tabedit PQ.h
 set splitbelow splitright
 wincmd _ | wincmd |
@@ -86,12 +85,12 @@ setlocal fml=1
 setlocal fdn=20
 setlocal fen
 silent! normal! zE
-let s:l = 24 - ((22 * winheight(0) + 14) / 29)
+let s:l = 18 - ((17 * winheight(0) + 14) / 29)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-24
-normal! 05|
+18
+normal! 042|
 wincmd w
 argglobal
 edit PQ.c
@@ -104,23 +103,29 @@ setlocal fml=1
 setlocal fdn=20
 setlocal fen
 silent! normal! zE
-let s:l = 67 - ((27 * winheight(0) + 14) / 28)
+let s:l = 19 - ((18 * winheight(0) + 14) / 28)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-67
+19
 normal! 0
 wincmd w
 exe '1resize ' . ((&lines * 29 + 30) / 61)
 exe '2resize ' . ((&lines * 28 + 30) / 61)
-tabedit DIGRAPHlists.c
+tabedit distancia.c
 set splitbelow splitright
+wincmd _ | wincmd |
+vsplit
+1wincmd h
+wincmd w
 set nosplitbelow
 set nosplitright
 wincmd t
 set winheight=1 winwidth=1
+exe 'vert 1resize ' . ((&columns * 119 + 119) / 239)
+exe 'vert 2resize ' . ((&columns * 119 + 119) / 239)
 argglobal
-edit DIGRAPHlists.c
+edit distancia.c
 setlocal fdm=manual
 setlocal fde=0
 setlocal fmr={{{,}}}
@@ -135,35 +140,6 @@ if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
 1
-normal! 0
-tabedit distancia.c
-set splitbelow splitright
-wincmd _ | wincmd |
-vsplit
-1wincmd h
-wincmd w
-set nosplitbelow
-set nosplitright
-wincmd t
-set winheight=1 winwidth=1
-exe 'vert 1resize ' . ((&columns * 117 + 119) / 239)
-exe 'vert 2resize ' . ((&columns * 121 + 119) / 239)
-argglobal
-edit distancia.c
-setlocal fdm=manual
-setlocal fde=0
-setlocal fmr={{{,}}}
-setlocal fdi=#
-setlocal fdl=0
-setlocal fml=1
-setlocal fdn=20
-setlocal fen
-silent! normal! zE
-let s:l = 114 - ((57 * winheight(0) + 29) / 58)
-if s:l < 1 | let s:l = 1 | endif
-exe s:l
-normal! zt
-114
 normal! 0
 wincmd w
 argglobal
@@ -177,39 +153,17 @@ setlocal fml=1
 setlocal fdn=20
 setlocal fen
 silent! normal! zE
-let s:l = 750 - ((30 * winheight(0) + 29) / 58)
+let s:l = 815 - ((26 * winheight(0) + 29) / 58)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-750
-normal! 06|
-wincmd w
-exe 'vert 1resize ' . ((&columns * 117 + 119) / 239)
-exe 'vert 2resize ' . ((&columns * 121 + 119) / 239)
-tabedit relatorio.txt
-set splitbelow splitright
-set nosplitbelow
-set nosplitright
-wincmd t
-set winheight=1 winwidth=1
-argglobal
-edit relatorio.txt
-setlocal fdm=manual
-setlocal fde=0
-setlocal fmr={{{,}}}
-setlocal fdi=#
-setlocal fdl=0
-setlocal fml=1
-setlocal fdn=20
-setlocal fen
-silent! normal! zE
-let s:l = 1 - ((0 * winheight(0) + 29) / 58)
-if s:l < 1 | let s:l = 1 | endif
-exe s:l
-normal! zt
-1
+815
 normal! 0
-tabnext 6
+wincmd w
+2wincmd w
+exe 'vert 1resize ' . ((&columns * 119 + 119) / 239)
+exe 'vert 2resize ' . ((&columns * 119 + 119) / 239)
+tabnext 4
 if exists('s:wipebuf') && getbufvar(s:wipebuf, '&buftype') isnot# 'terminal'
   silent exe 'bwipe ' . s:wipebuf
 endif

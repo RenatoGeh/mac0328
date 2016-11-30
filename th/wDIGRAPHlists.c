@@ -15,8 +15,8 @@
 //
 ////////////////////////////////////////////////////////////// */
 
-/* Biblioteca para representação de digrafos em formato de lista de
- * adjacência. */
+/* Biblioteca para representação de digrafos com pesos em formato de
+ * lista de adjacência. */
 
 #include "wDIGRAPHlists.h"
 
@@ -791,21 +791,16 @@ void DIGRAPHsptD1(Digraph G, Vertex s) {
    }
 }
 
-/* Recebe um digrafo G com custos positivos nos arcos e um vértice s.
- * Calcula uma SPT com raiz s. A SPT é armazenada no vetor G->pai[]. As
- * G->distâncias a partir de s são armazenadas no vetor G->dist[]. (Se
- * um vértice v não está ao alcance de s, G->pai[v] vale -1.) Esta
- * função implementa o algoritmo de Dijkstra. Ela supõe que G é
- * representado por listas de adjacência e tem no máximo 1000
- * vértices. (O código foi inspirado nos Programas 20.4, e 21.1 de
- * Sedgewick.) */
 void DIGRAPHsptD2(Digraph G, Vertex s) {
    Vertex y; link a;
+   double INFINITE = DIGRAPHinf(G);
    CHECK_FRJ(G);
    CHECK_PPP(G);
    CHECK_DIST(G);
-   for (y = 0; y < G->V; y++)
+   for (y = 0; y < G->V; y++) {
       G->pai[y] = G->frj[y] = -1;
+      G->dist[y] = INFINITE;
+   }
    G->pai[s] = s, G->dist[s] = 0.0;
    PQinit(G->V);
    for (a = G->adj[s]; a != NULL; a = a->next) {
