@@ -13,6 +13,7 @@ badd +1 DIGRAPHlists.c
 badd +58 PQ.c
 badd +24 PQ.h
 badd +104 distancia.c
+badd +0 relatorio.txt
 argglobal
 silent! argdel *
 argadd wDIGRAPHlists.h
@@ -158,12 +159,12 @@ setlocal fml=1
 setlocal fdn=20
 setlocal fen
 silent! normal! zE
-let s:l = 132 - ((32 * winheight(0) + 29) / 58)
+let s:l = 114 - ((57 * winheight(0) + 29) / 58)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-132
-normal! 013|
+114
+normal! 0
 wincmd w
 argglobal
 edit wDIGRAPHlists.c
@@ -185,7 +186,30 @@ normal! 06|
 wincmd w
 exe 'vert 1resize ' . ((&columns * 117 + 119) / 239)
 exe 'vert 2resize ' . ((&columns * 121 + 119) / 239)
-tabnext 5
+tabedit relatorio.txt
+set splitbelow splitright
+set nosplitbelow
+set nosplitright
+wincmd t
+set winheight=1 winwidth=1
+argglobal
+edit relatorio.txt
+setlocal fdm=manual
+setlocal fde=0
+setlocal fmr={{{,}}}
+setlocal fdi=#
+setlocal fdl=0
+setlocal fml=1
+setlocal fdn=20
+setlocal fen
+silent! normal! zE
+let s:l = 1 - ((0 * winheight(0) + 29) / 58)
+if s:l < 1 | let s:l = 1 | endif
+exe s:l
+normal! zt
+1
+normal! 0
+tabnext 6
 if exists('s:wipebuf') && getbufvar(s:wipebuf, '&buftype') isnot# 'terminal'
   silent exe 'bwipe ' . s:wipebuf
 endif
