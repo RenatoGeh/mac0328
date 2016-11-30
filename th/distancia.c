@@ -38,10 +38,11 @@ int main(int argc, char *args[]) {
 
    if (V < 30) {
       printf("Imprimindo o digrafo G com %d vertices e %d arestas. Os "
-            "pesos de cada aresta e' impressa em parenteses:\n", V, A);
+            "pesos de cada aresta e' impresso em parenteses:\n", V, A);
       DIGRAPHshow(G);
    }
 
+   DIGRAPHdraw(G, "graph.dot");
    f(G, s);
    if (!DIGRAPHcheckDist(G, s, G->dist))
       printf("Distancia medida com DIGRAPHsptD%d errada!\n", impl);
@@ -54,6 +55,9 @@ int main(int argc, char *args[]) {
    return 0;
 }
 
+double min(double l, double r) { return l > r ? r : l; }
+double max(double l, double r) { return l < r ? r : l; }
+
 int count;
 
 double deltaR(Digraph G, Vertex s, Vertex v, double c, Vertex *p,
@@ -62,10 +66,12 @@ double deltaR(Digraph G, Vertex s, Vertex v, double c, Vertex *p,
    double delta;
    G->pai[v] = count++;
    delta = (G->dist[s] + c) - G->dist[v];
+   delta = min(c, max(delta, 0));
    for (a = G->adj[v]; a != NULL; a = a->next) {
       double d;
       if (G->pai[a->w] != -1) {
-         d = (G->dist[v] + c) - G->dist[a->w];
+         d = (G->dist[v] + a->cst) - G->dist[a->w];
+         d = min(a->cst, max(d, 0));
          if (d > delta) {
             delta = d;
             *p = v; *q = a->w;
@@ -98,27 +104,30 @@ void print_delta(Digraph G, Vertex s) {
    }
 
    if (max < 0)
-      puts("Nao e' possivel achar delta pois s e' um no' disjunto "
+      puts("Nao foi possivel achar delta pois s e' um no' disjunto "
             "dos outros vertices.");
+   else if (max == 0)
+      puts("Nenhum custo pode ser alterado sem alterar a arvore.");
    else
-      printf("delta[%d-%d]=%.2f\n", p, q, max);
+      printf("delta[%d-%d]=%.4f\n", p, q, max);
 }
 
 void print_diameter(Digraph G, void (*f)(Digraph, Vertex)) {
    int show;
    Vertex v, vmax;
    Vertex *cpai, *path;
-   double max;
+   double max, inf;
 
    show = G->V < 30;
    if (show) cpai = (Vertex*) malloc(G->V * sizeof(Vertex));
-   max = -1;
+   max = vmax = -1;
+   inf = DIGRAPHinf(G);
 
    for (v = 0; v < G->V; ++v) {
       Vertex w, y = -1;
       f(G, v);
       for (w = 0; w < G->V; ++w)
-         if (G->dist[w] > max) {
+         if (w != v && G->dist[w] < inf && G->dist[w] > max) {
             max = G->dist[w];
             y = w;
          }
@@ -129,12 +138,19 @@ void print_diameter(Digraph G, void (*f)(Digraph, Vertex)) {
       }
    }
 
+   if (max < 0) {
+      puts("O digrafo nao tem arestas.");
+      return;
+   }
+
+   printf("Diametro: %.2f\n", max);
    if (show) {
-      int i;
-      path = DIGRAPHpath(vmax, cpai, G->V);
-      puts("Caminho do diametro:");
-      for (i = 1; i < G->V; ++i)
-         printf("%d - %d\n", path[i-1], path[i]);
+      int i, n;
+      path = DIGRAPHpath(vmax, cpai, G->V, &n);
+      printf("Caminho do diametro (tamanho n=%d):\n", n);
+      for (i = 1; i <= n; ++i)
+         printf("%3d -> %3d\n", path[i-1], path[i]);
       free(cpai);
+      free(path);
    }
 }

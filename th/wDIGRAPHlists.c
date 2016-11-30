@@ -26,8 +26,6 @@
 
 #include "PQ.h"
 
-#define INFINITE DBL_MAX
-
 /************** Digraph struct components ***************/
 
 #define PPP_IS_NULL(G) ((G)->pre == NULL || (G)->pos == NULL ||\
@@ -282,7 +280,8 @@ void DIGRAPHdraw(Digraph G, const char *filename) {
    for (i = 0; i < G->V; i++) {
          link it = G->adj[i];
       while (it != NULL) {
-         fprintf(out, "v_%d -> v_%d;\n", i, it->w);
+         fprintf(out, "v_%d -> v_%d [label=\"%.2f\"];\n", i, it->w,
+               it->cst);
          it = it->next;
       }
    }
@@ -714,10 +713,25 @@ double GRAPHsmallWorld(Graph G) {
    return mean / ((n-1)*n);
 }
 
+double DIGRAPHinf(Digraph G) {
+   double inf;
+   Vertex v;
+   for (v = inf = 0; v < G->V; ++v) {
+      link a;
+      for (a = G->adj[v]; a != NULL; a = a->next)
+         if (a->cst > 0)
+            inf += a->cst;
+   }
+   return inf + 1;
+}
+
 void DIGRAPHsptD0(Digraph G, Vertex s) {
    Vertex v;
+   double INFINITE;
+
    CHECK_PPP(G);
    CHECK_DIST(G);
+   INFINITE = DIGRAPHinf(G);
 
    for (v = 0; v < G->V; v++)
       G->pai[v] = -1, G->dist[v] = INFINITE;
@@ -726,6 +740,7 @@ void DIGRAPHsptD0(Digraph G, Vertex s) {
    while (TRUE) {
       Vertex x, y;
       double min = INFINITE;
+      y = x = -1;
       for (v = 0; v < G->V; v++) {
          link a;
          if (G->pai[v] == -1) continue;
@@ -743,9 +758,13 @@ void DIGRAPHsptD0(Digraph G, Vertex s) {
 
 void DIGRAPHsptD1(Digraph G, Vertex s) {
    Vertex y; link a;
+   double INFINITE;
+
    CHECK_FRJ(G);
    CHECK_PPP(G);
    CHECK_DIST(G);
+   INFINITE = DIGRAPHinf(G);
+
    for (y = 0; y < G->V; y++)
       G->pai[y] = -1, G->dist[y] = INFINITE;
    G->pai[s] = s, G->dist[s] = 0.0;
@@ -815,44 +834,55 @@ void DIGRAPHsptD2(Digraph G, Vertex s) {
    PQfree();
 }
 
-static int cdR(Digraph G, Vertex s, Vertex v, double c, double *dist) {
+static int cdR(Digraph G, Vertex s, Vertex v, double c, double *dist,
+      Vertex r) {
    link a;
    G->pai[v] = pre_count++;
    if (dist[s] + c < dist[v]) return FALSE;
-   for (a = G->adj[v]; a != NULL; a = a->next)
+   for (a = G->adj[v]; a != NULL; a = a->next) {
+      if (a->w == r) continue;
       if (G->pai[a->w] != -1) {
-         if (dist[v] + c < dist[a->w])
+         if (dist[v] + a->cst < dist[a->w])
             return FALSE;
-      } else if (!cdR(G, v, a->w, a->cst, dist))
+      } else if (!cdR(G, v, a->w, a->cst, dist, r))
          return FALSE;
+   }
    return TRUE;
 }
 
 int DIGRAPHcheckDist(Digraph G, Vertex s, double *dist) {
    link a;
    Vertex v;
+   double INFINITE;
+
    CHECK_PPP(G);
+   INFINITE = DIGRAPHinf(G);
    pre_count = 0;
+
    for (v = 0; v < G->V; ++v)
       G->pai[v] = -1;
    for (a = G->adj[s]; a != NULL; a = a->next)
-      if (!cdR(G, s, a->w, a->cst, dist))
+      if (!cdR(G, s, a->w, a->cst, dist, s))
          return FALSE;
    for (v = 0; v < G->V; ++v)
-      if (v != s && G->pai[v] < 0 && dist[v] < INFINITE) {
+      if (v != s && G->pai[v] < 0 && dist[v] < INFINITE)
          return FALSE;
-      }
    return TRUE;
 }
 
-Vertex* DIGRAPHpath(Vertex t, Vertex *T, int n) {
+Vertex* DIGRAPHpath(Vertex t, Vertex *T, int n, int *m) {
    Vertex *p, v;
-   v = t;
-   p = (Vertex*) malloc(n * sizeof(Vertex));
+   v = t; *m = 0;
    do {
-      p[--n] = v;
+      v = T[v];
+      ++*m;
+   } while (v != T[v]);
+   v = t; n = *m;
+   p = (Vertex*) malloc(*m * sizeof(Vertex));
+   do {
+      p[n--] = v;
       v = T[v];
    } while (v != T[v]);
-   p[n-1] = v;
+   p[0] = v;
    return p;
 }

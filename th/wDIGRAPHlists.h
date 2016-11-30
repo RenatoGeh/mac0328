@@ -208,6 +208,10 @@ void GRAPHaddRandEdges(Graph G, int k);
  * distintos. Caso G seja desconexo, retorna G->V+1. */
 double GRAPHsmallWorld(Graph G);
 
+/* Retorna o representante de "infinito" do digrafo. Ou seja, retorna a
+ * soma dos custos positivos mais um. */
+double DIGRAPHinf(Digraph G);
+
 /* Recebe um digrafo G com cusstos positivos nos arcos e um vértice s.
  * Calcula as distâncias dos vértices em relação ao vértice s. Armazena
  * em dist e a SPT em pai. */
@@ -221,7 +225,6 @@ void DIGRAPHsptD0(Digraph G, Vertex s);
  * representado por listas de adjacência e tem no máximo 1000 vértices.
  * (O código foi inspirado no Programa 20.3 de Sedgewick.) */
 void DIGRAPHsptD1(Digraph G, Vertex s);
-
 
 /* Recebe um digrafo G com custos positivos nos arcos e um vértice s.
  * Calcula uma SPT com raiz s. A SPT é armazenada no vetor pai[]. As
@@ -238,9 +241,10 @@ void DIGRAPHsptD2(Digraph G, Vertex s);
 int DIGRAPHcheckDist(Digraph G, Vertex s, double *dist);
 
 /* Recebe um vértice t e um vetor de pais T com tamanho n representando
- * uma árvore radicada. Retorna um vetor contendo a sequência de
- * vértices do caminho da raíz de T até t. */
-Vertex* DIGRAPHpath(Vertex t, Vertex *T, int n);
+ * uma árvore radicada. Recebe também um ponteiro para um inteiro que
+ * devolve o tamanho do caminho Retorna um vetor contendo a sequência
+ * de vértices do caminho da raíz de T até t. */
+Vertex* DIGRAPHpath(Vertex t, Vertex *T, int n, int *m);
 
 #ifdef TEST
 /* REPRESENTAÇÃO POR LISTAS DE ADJACÊNCIA: A função DIGRAPHlists_test()

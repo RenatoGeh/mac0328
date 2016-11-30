@@ -7,12 +7,12 @@ if expand('%') == '' && !&modified && line('$') <= 1 && getline(1) == ''
   let s:wipebuf = bufnr('%')
 endif
 set shortmess=aoO
-badd +250 wDIGRAPHlists.h
+badd +251 wDIGRAPHlists.h
 badd +1 wDIGRAPHlists.c
 badd +1 DIGRAPHlists.c
 badd +58 PQ.c
 badd +24 PQ.h
-badd +19 distancia.c
+badd +104 distancia.c
 argglobal
 silent! argdel *
 argadd wDIGRAPHlists.h
@@ -34,12 +34,12 @@ setlocal fml=1
 setlocal fdn=20
 setlocal fen
 silent! normal! zE
-let s:l = 1 - ((0 * winheight(0) + 29) / 58)
+let s:l = 283 - ((42 * winheight(0) + 29) / 58)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-1
-normal! 0
+283
+normal! 042|
 tabedit wDIGRAPHlists.h
 set splitbelow splitright
 set nosplitbelow
@@ -56,12 +56,12 @@ setlocal fml=1
 setlocal fdn=20
 setlocal fen
 silent! normal! zE
-let s:l = 245 - ((51 * winheight(0) + 29) / 58)
+let s:l = 212 - ((19 * winheight(0) + 29) / 58)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-245
-normal! 0
+212
+normal! 040|
 tabedit PQ.h
 set splitbelow splitright
 wincmd _ | wincmd |
@@ -145,8 +145,8 @@ set nosplitbelow
 set nosplitright
 wincmd t
 set winheight=1 winwidth=1
-exe 'vert 1resize ' . ((&columns * 119 + 119) / 239)
-exe 'vert 2resize ' . ((&columns * 119 + 119) / 239)
+exe 'vert 1resize ' . ((&columns * 117 + 119) / 239)
+exe 'vert 2resize ' . ((&columns * 121 + 119) / 239)
 argglobal
 edit distancia.c
 setlocal fdm=manual
@@ -158,12 +158,12 @@ setlocal fml=1
 setlocal fdn=20
 setlocal fen
 silent! normal! zE
-let s:l = 104 - ((53 * winheight(0) + 29) / 58)
+let s:l = 132 - ((32 * winheight(0) + 29) / 58)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-104
-normal! 07|
+132
+normal! 013|
 wincmd w
 argglobal
 edit wDIGRAPHlists.c
@@ -176,16 +176,15 @@ setlocal fml=1
 setlocal fdn=20
 setlocal fen
 silent! normal! zE
-let s:l = 841 - ((41 * winheight(0) + 29) / 58)
+let s:l = 750 - ((30 * winheight(0) + 29) / 58)
 if s:l < 1 | let s:l = 1 | endif
 exe s:l
 normal! zt
-841
-normal! 015|
+750
+normal! 06|
 wincmd w
-2wincmd w
-exe 'vert 1resize ' . ((&columns * 119 + 119) / 239)
-exe 'vert 2resize ' . ((&columns * 119 + 119) / 239)
+exe 'vert 1resize ' . ((&columns * 117 + 119) / 239)
+exe 'vert 2resize ' . ((&columns * 121 + 119) / 239)
 tabnext 5
 if exists('s:wipebuf') && getbufvar(s:wipebuf, '&buftype') isnot# 'terminal'
   silent exe 'bwipe ' . s:wipebuf
